@@ -1,0 +1,144 @@
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Skill-Link.dll.config
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Skill-Link.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Skill-Link.pdb
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csc.exe
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csc.exe.config
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csc.rsp
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csi.exe
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csi.exe.config
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csi.rsp
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.AppContext.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Console.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.Compression.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Net.Http.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Net.Sockets.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.ValueTuple.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.XPath.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\vbc.exe
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\vbc.exe.config
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\vbc.rsp
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\VBCSCompiler.exe
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Antlr3.Runtime.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.AspNet.FriendlyUrls.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Newtonsoft.Json.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\System.Web.Optimization.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\WebGrease.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\System.Web.Optimization.xml
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Newtonsoft.Json.xml
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Antlr3.Runtime.pdb
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.AspNet.FriendlyUrls.xml
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.csproj.AssemblyReference.cache
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.csproj.CoreCompileInputs.cache
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.csproj.Up2Date
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.dll
+C:\Users\axlml\OneDrive\Desktop\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.pdb
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Skill-Link.dll.config
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Skill-Link.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Skill-Link.pdb
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csc.exe
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csc.exe.config
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csc.rsp
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csi.exe
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csi.exe.config
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\csi.rsp
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.AppContext.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Console.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.Compression.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Net.Http.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Net.Sockets.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.ValueTuple.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.XPath.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\vbc.exe
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\vbc.exe.config
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\vbc.rsp
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\VBCSCompiler.exe
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Antlr3.Runtime.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.AspNet.FriendlyUrls.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Newtonsoft.Json.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\System.Web.Optimization.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\WebGrease.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\System.Web.Optimization.xml
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Newtonsoft.Json.xml
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Antlr3.Runtime.pdb
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.AspNet.FriendlyUrls.xml
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.csproj.AssemblyReference.cache
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.csproj.CoreCompileInputs.cache
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.csproj.Up2Date
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.dll
+C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Debug\Skill-Link.pdb

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Release\Package\PackageTmp" />
+  <setAcl path="C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\ASUS TUF\Downloads\CS103P_PROJECT\CS103P_PROJECT\Skill-Link\Skill-Link\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>
