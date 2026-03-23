@@ -720,7 +720,12 @@
                         <asp:Button ID="btnPlaceOrder" runat="server" Text="Done"
                             CssClass="btn btn-primary btn-full"
                             OnClick="btnPlaceOrder_Click"
-                            OnClientClick="return prepareOrder();" />
+                            OnClientClick="return prepareOrder();"
+                            Style="display:none;" />
+
+                        <button type="button" class="btn btn-primary btn-full" onclick="if(prepareOrder()){simulatePayment();}">
+                            <i class="fas fa-lock"></i> Place Order &amp; Pay
+                        </button>
                     </div>
 
                     <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-size:12px;color:var(--muted);">
@@ -1045,6 +1050,40 @@
         state.payMethod = method;
         document.getElementById('<%= hdnPaymentMethod.ClientID %>').value = method;
         document.getElementById('cardFields').classList.toggle('show', method === 'card');
+    }
+
+    function simulatePayment() {
+        var method = state.payMethod;
+        var total = document.getElementById('sideTotal').textContent;
+        var icons = { gcash: 'fa-mobile-alt', paypal: 'fa-paypal fab', bank: 'fa-university', card: 'fa-credit-card' };
+        var names = { gcash: 'GCash', paypal: 'PayPal', bank: 'Bank Transfer', card: 'Credit / Debit Card' };
+
+        // Build processing overlay
+        var overlay = document.createElement('div');
+        overlay.id = 'payOverlay';
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,17,23,0.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;';
+        overlay.innerHTML =
+            '<div style="width:72px;height:72px;border-radius:50%;border:3px solid rgba(72,229,194,0.2);border-top-color:#48e5c2;animation:spin 0.8s linear infinite;"></div>' +
+            '<div style="text-align:center;">' +
+            '<p style="color:#48e5c2;font-size:18px;font-weight:700;margin-bottom:6px;">Processing Payment...</p>' +
+            '<p style="color:#64748b;font-size:14px;"><i class="fas ' + (icons[method] || 'fa-credit-card') + '" style="margin-right:6px;"></i>' + (names[method] || method) + ' · ' + total + '</p>' +
+            '</div>' +
+            '<p style="color:#334155;font-size:12px;">Please do not close this window</p>';
+        document.body.appendChild(overlay);
+
+        // Add spinner keyframes if not present
+        if (!document.getElementById('spinStyle')) {
+            var s = document.createElement('style');
+            s.id = 'spinStyle';
+            s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+            document.head.appendChild(s);
+        }
+
+        // After 2.5 seconds, remove overlay and submit
+        setTimeout(function () {
+            document.getElementById('payOverlay').remove();
+            document.getElementById('<%= btnPlaceOrder.ClientID %>').click();
+        }, 2500);
     }
 
     /* ═══════════════════════════════════════════
