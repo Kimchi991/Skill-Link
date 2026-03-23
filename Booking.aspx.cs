@@ -14,22 +14,24 @@ namespace Skill_Link
         {
             if (!IsPostBack)
             {
-                string title = Request.QueryString["title"];
-                string price = Request.QueryString["price"];
-                string freelancer = Request.QueryString["freelancer"];
+                string title = Request.QueryString["title"] ?? "";
+                string price = Request.QueryString["price"] ?? "0";
+                string freelancer = Request.QueryString["freelancer"] ?? "";
+                string name = Request.QueryString["name"] ?? freelancer;
 
-                if (!string.IsNullOrEmpty(title))
-                {
-                    hdnServiceTitle.Value = title;
-                    hdnTotalAmount.Value = price;
-                    litServiceTitleDisplay.Text = title;
-                    litFreelancerName.Text = freelancer;
-                    litFinalPrice.Text = string.Format("{0:N0}", decimal.TryParse(price, out var p) ? p : 0m);
-                }
-                else
+                // Entry point 1: from service modal (has title)
+                // Entry point 2: from freelancer card (has freelancer/name, no title)
+                if (string.IsNullOrEmpty(title) && string.IsNullOrEmpty(freelancer))
                 {
                     Response.Redirect("Home.aspx");
+                    return;
                 }
+
+                hdnServiceTitle.Value = string.IsNullOrEmpty(title) ? "Direct Booking" : title;
+                hdnTotalAmount.Value = price;
+                litServiceTitleDisplay.Text = hdnServiceTitle.Value;
+                litFreelancerName.Text = name;
+                litFinalPrice.Text = string.Format("{0:N0}", decimal.TryParse(price, out var p) ? p : 0m);
             }
         }
 
@@ -74,7 +76,7 @@ namespace Skill_Link
         // STEP 4 -> 5 (CONFIRM & SAVE TO DATABASE)
         protected void btnConfirmBooking_Click(object sender, EventArgs e)
         {
-            string bookingRef  = "BK-" + DateTime.Now.Ticks.ToString().Substring(10);
+            string bookingRef = "BK-" + DateTime.Now.ToString("yyyyMMdd") + "-" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
             string clientEmail = Session["UserEmail"]?.ToString() ?? "Guest@SkillLink.com";
 
             try

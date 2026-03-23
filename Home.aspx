@@ -1312,7 +1312,7 @@
             price: finalPrice,
             pkg: pkgNames[currentPkg]
         });
-        window.location.href = 'Booking.aspx?' + params.toString();
+        window.location.href = 'Order.aspx?' + params.toString();
     }
 
     function bookFreelancer(email, username) {
