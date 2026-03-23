@@ -892,14 +892,7 @@
         <div class="services-grid">
             <asp:Repeater ID="rptServices" runat="server" OnItemDataBound="rptServices_ItemDataBound">
                 <ItemTemplate>
-                    <div class="service-card" onclick="openModal(
-                        '<%# Server.HtmlEncode(Eval("Title").ToString().Replace("'","\\\'")) %>',
-                        '<%# Server.HtmlEncode(Eval("Description").ToString().Replace("'","\\\'")) %>',
-                        '<%# Eval("Category") %>',
-                        '<%# ShortenName(Eval("Name").ToString()) %>',
-                        '<%# GetInitial(Eval("Name").ToString()) %>',
-                        '<%# string.Format("{0:N0}", Eval("Price")) %>'
-                    )">
+style="cursor:pointer;" onclick="event.stopPropagation();">
                         <div class="sc-thumb <%# GetGradient(Eval("Category").ToString()) %>">
                             <i class="<%# GetIcon(Eval("Category").ToString()) %>"></i>
                         </div>
@@ -915,14 +908,14 @@
                                     ₱<%# string.Format("{0:N0}", Eval("Price")) %>
                                     <small>/ starting</small>
                                 </div>
-                                <button class="sc-cta" onclick="event.stopPropagation(); openModal(
-                                    '<%# Server.HtmlEncode(Eval("Title").ToString().Replace("'","\\\'")) %>',
-                                    '<%# Server.HtmlEncode(Eval("Description").ToString().Replace("'","\\\'")) %>',
-                                    '<%# Eval("Category") %>',
-                                    '<%# ShortenName(Eval("Name").ToString()) %>',
-                                    '<%# GetInitial(Eval("Name").ToString()) %>',
-                                    '<%# string.Format("{0:N0}", Eval("Price")) %>'
-                                )">View</button>
+onclick="event.stopPropagation(); openModalSafe(
+                                    '<%# Server.HtmlEncode(Eval("Title")?.ToString() ?? "Untitled").Replace("'","\\\\'") %>',
+                                    '<%# Server.HtmlEncode(Eval("Description")?.ToString() ?? "").Replace("'","\\\\'") %>',
+                                    '<%# Eval("Category")?.ToString() ?? "Other" %>',
+                                    '<%# ShortenName(Eval("Name")?.ToString() ?? "Anonymous") %>',
+                                    '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
+                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 0) %>'
+                                );">View</button>
                             </div>
                         </div>
                     </div>

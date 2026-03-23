@@ -899,11 +899,7 @@
     var svcSeller = '<%= System.Web.HttpUtility.JavaScriptStringEncode(litSellerName.Text) %>';
 
     window.addEventListener('DOMContentLoaded', function () {
-        // Store raw seller email from URL into hidden field for server use
-        var urlParams = new URLSearchParams(window.location.search);
-        var rawSellerEmail = urlParams.get('sellerEmail') || urlParams.get('seller') || '';
-        var hdnSE = document.getElementById('<%= hdnSellerEmail.ClientID %>');
-        if (hdnSE) hdnSE.value = rawSellerEmail;
+        // hdnSellerEmail is set server-side in LoadServiceFromDB — do not overwrite from JS.
 
         // Read base price reliably from rendered DOM
         state.basePrice = getBasePrice();

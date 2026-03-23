@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Security.Principal;
+using System.Web.Services.Description;
 using System.Web.UI;
 
 namespace Skill_Link
@@ -69,21 +71,24 @@ namespace Skill_Link
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     SqlCommand cmd = new SqlCommand(
-                        "SELECT Title, Name, Category, Price FROM Services1 WHERE ServiceID = @Id", conn);
+                        @"SELECT s.Title, s.Name, s.Category, s.Price, a.Username
+                          FROM Services1 s
+                          LEFT JOIN Account a ON a.Email = s.Name
+                          WHERE s.ServiceID = @Id", conn);
                     cmd.Parameters.AddWithValue("@Id", serviceId);
                     conn.Open();
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            string rawSellerEmail = reader["Name"].ToString(); // Services1.Name = seller's email
+                            string rawSellerEmail = reader["Name"].ToString();
 
                             litServiceTitle.Text = Server.HtmlEncode(reader["Title"].ToString());
-                            litSellerName.Text = Server.HtmlEncode(rawSellerEmail);
+                            litSellerName.Text = Server.HtmlEncode(reader["Username"] != DBNull.Value
+                                ? reader["Username"].ToString()
+                                : rawSellerEmail);
                             litCategory.Text = Server.HtmlEncode(reader["Category"].ToString());
                             BasePrice = Convert.ToInt32(reader["Price"]);
-
-                            // Store raw seller email in hidden field — used by btnPlaceOrder_Click
                             hdnSellerEmail.Value = rawSellerEmail;
 
                             SetPackagePrices(BasePrice);
@@ -132,6 +137,7 @@ namespace Skill_Link
             if (requirements.Length < 20)
             {
                 ShowError(lblPayError, "Please provide more detail in your requirements (at least 20 characters).");
+                ScriptManager.RegisterStartupScript(this, GetType(), "goReq", "goStep(2);", true);
                 return;
             }
             if (string.IsNullOrWhiteSpace(paymentMethod))
@@ -175,7 +181,7 @@ namespace Skill_Link
 
             // ── Generate unique order reference ──────────────────────────────
             string orderRef = "SL-" + DateTime.Now.ToString("yyyyMMdd") + "-" +
-                              new Random().Next(1000, 9999).ToString();
+                              Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
 
             try
             {
@@ -203,9 +209,9 @@ namespace Skill_Link
                     cmd.Parameters.AddWithValue("@Requirements", requirements);
                     cmd.Parameters.AddWithValue("@Notes", string.IsNullOrEmpty(notes)
                                                                       ? (object)DBNull.Value : notes);
-                    cmd.Parameters.AddWithValue("@Deadline", string.IsNullOrEmpty(deadline)
-                                                                      ? (object)DBNull.Value
-                                                                      : (object)DateTime.Parse(deadline));
+                    cmd.Parameters.AddWithValue("@Deadline", DateTime.TryParse(deadline, out var dl)
+                                                                      ? (object)dl
+                                                                      : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@Communication", communication);
                     cmd.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
                     cmd.Parameters.AddWithValue("@TotalAmount", totalPrice);
@@ -220,6 +226,10 @@ namespace Skill_Link
                 litOrderRef.Text = orderRef;
                 SuccessOrderRef = orderRef;
                 hdnOrderRef.Value = orderRef;
+
+                // Navigate to the success step — SuccessOrderRef is evaluated at render time
+                // (before this click handler runs), so we trigger goStep(5) via startup script instead.
+                ScriptManager.RegisterStartupScript(this, GetType(), "orderSuccess", "goStep(5);", true);
             }
             catch (Exception ex)
             {
