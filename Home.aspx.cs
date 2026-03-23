@@ -271,15 +271,13 @@ private void LoadFreelancers()
             catch (Exception ex)
             {
                 // Log error - create debug label in markup later
-                System.Diagnostics.Debug.WriteLine("LoadFreelancers error: " + ex.Message);
+             
             }
 
             rptFreelancers.DataSource = dt;
             rptFreelancers.DataBind();
             pnlNoFreelancers.Visible = dt.Rows.Count == 0;
 
-// Debug - literal added to markup
-            // litFreelancerDebug.Text = $"Loaded {dt.Rows.Count} freelancers";
         }
         public string ShortenName(string name)
         {

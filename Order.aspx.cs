@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Security.Principal;
-using System.Web.Services.Description;
 using System.Web.UI;
 
 namespace Skill_Link

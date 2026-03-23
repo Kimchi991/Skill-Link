@@ -946,7 +946,7 @@
 <div id="viewFreelancers" style="display: none;">
             <div class="section-head">
                 <div>
-                    <h2>Browse Freelancers (<asp:Literal ID="litFreelancerDebug" runat="server" Text="Loading..." />)</h2>
+                    <h2>Browse Freelancers</h2>
                     <p>Find and book talented professionals for your project</p>
                 </div>
             </div>
@@ -1124,7 +1124,7 @@
 
                     <!-- Save / Share -->
                     <div class="modal-actions">
-                        <button type="button" class="modal-action-btn" onclick="saveService()"><i class="fas fa-heart"></i> Save</button>
+                        <button type="button" class="modal-action-btn" style="opacity:0.4;cursor:not-allowed;" title="Coming soon"><i class="fas fa-heart"></i> Save</button>
                         <button type="button" class="modal-action-btn" onclick="shareService()"><i class="fas fa-share-alt"></i> Share</button>
                     </div>
                 </div>
@@ -1277,9 +1277,8 @@
     }
 
     function contactSeller() {
-        var seller = document.getElementById('modalSellerName').textContent;
-        alert('Redirecting to messages with ' + seller + '…');
-        // Replace with: window.location.href = 'Messages.aspx?to=' + encodeURIComponent(seller);
+        if (!currentSeller) return;
+        window.location.href = 'mailto:' + currentSeller;
     }
 
     function saveService() {
