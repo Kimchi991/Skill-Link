@@ -24,35 +24,30 @@ namespace Skill_Link
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Show/hide Post a Service based on role
-            string role = Session["UserRole"] != null ? Session["UserRole"].ToString() : "";
-            bool canPost = role.Equals("Freelancer", StringComparison.OrdinalIgnoreCase)
-                        || role.Equals("Admin", StringComparison.OrdinalIgnoreCase);
+            // 1. Handle UI Visibility (Login/Profile)
+            bool isLoggedIn = Session["UserEmail"] != null;
+            string role = Session["UserRole"]?.ToString() ?? "";
 
-            lnkFreelance.Visible = canPost;
+            lnkLogin.Visible = !isLoggedIn;
+            lnkProfile.Visible = isLoggedIn;
 
-            // Show My Account if logged in, Sign In if not
-            if (Session["UserEmail"] != null)
-            {
-                lnkLogin.Visible = false;
-                lnkProfile.Visible = true;
-            }
-            else
-            {
-                lnkLogin.Visible = true;
-                lnkProfile.Visible = false;
-                lnkFreelance.Visible = false;
-            }
+            // Only show "Post a Service" to logged-in Freelancers/Admins
+            lnkFreelance.Visible = isLoggedIn && (role.Equals("Freelancer", StringComparison.OrdinalIgnoreCase) || role.Equals("Admin", StringComparison.OrdinalIgnoreCase));
 
-if (!IsPostBack)
+            // 2. Data Loading
+            if (!IsPostBack)
             {
+                // Force the services view to be visible if it's the default landing
+                // Note: Make sure viewServices has runat="server" in the .aspx file
+                viewServices.Style["display"] = "block";
+
                 LoadServices("Programming & Tech");
                 SetActiveMeta("Programming & Tech");
                 LoadFreelancers();
             }
             else
             {
-                // Reload freelancers on postback to show debug
+                // Re-binding on PostBack is usually only needed if ViewState is disabled
                 LoadFreelancers();
             }
         }
@@ -291,6 +286,16 @@ private void LoadFreelancers()
             int at = name.IndexOf('@');
             if (at > 0) return name.Substring(0, at);
             return name.Length > 20 ? name.Substring(0, 20) + "…" : name;
+        }
+        protected void rptServices_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            // This code runs for every single service "item" inside your repeater.
+            // We check if the item is a data row (not a header or footer).
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                // For now, we leave this empty. 
+                // Just having this method here satisfies the compiler so Azure can build the site.
+            }
         }
     }
 }

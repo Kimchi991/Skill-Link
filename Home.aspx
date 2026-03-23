@@ -880,35 +880,39 @@
 <div class="page-body">
 
     <!-- SERVICES VIEW -->
-    <div id="viewServices" style="display:none;">
+    <div id="viewServices" runat="server" style="display:none;">
         <div class="section-head">
             <div>
                 <h2><asp:Literal ID="litCatTitle" runat="server" /></h2>
                 <p><asp:Literal ID="litCatDesc" runat="server" /></p>
             </div>
         </div>
-        <div class="services-grid">
 
         <div class="services-grid">
             <asp:Repeater ID="rptServices" runat="server" OnItemDataBound="rptServices_ItemDataBound">
                 <ItemTemplate>
-style="cursor:pointer;" onclick="event.stopPropagation();">
+                    <div class="service-card" style="cursor:pointer;" onclick="event.stopPropagation();">
+        
                         <div class="sc-thumb <%# GetGradient(Eval("Category").ToString()) %>">
                             <i class="<%# GetIcon(Eval("Category").ToString()) %>"></i>
                         </div>
+
                         <div class="sc-body">
                             <div class="sc-category"><%# Eval("Category") %></div>
                             <div class="sc-title"><%# Server.HtmlEncode(Eval("Title").ToString()) %></div>
+            
                             <div class="sc-seller">
                                 <div class="sc-avatar"><%# GetInitial(Eval("Name").ToString()) %></div>
                                 <span class="sc-seller-name"><%# ShortenName(Eval("Name").ToString()) %></span>
                             </div>
+
                             <div class="sc-footer">
                                 <div class="sc-price">
                                     ₱<%# string.Format("{0:N0}", Eval("Price")) %>
                                     <small>/ starting</small>
                                 </div>
-onclick="event.stopPropagation(); openModalSafe(
+
+                                <button type="button" class="view-btn" onclick="event.stopPropagation(); openModalSafe(
                                     '<%# Server.HtmlEncode(Eval("Title")?.ToString() ?? "Untitled").Replace("'","\\\\'") %>',
                                     '<%# Server.HtmlEncode(Eval("Description")?.ToString() ?? "").Replace("'","\\\\'") %>',
                                     '<%# Eval("Category")?.ToString() ?? "Other" %>',
@@ -918,8 +922,7 @@ onclick="event.stopPropagation(); openModalSafe(
                                 );">View</button>
                             </div>
                         </div>
-                    </div>
-                </ItemTemplate>
+                     </div> </ItemTemplate>
             </asp:Repeater>
 
             <asp:Panel ID="pnlEmpty" runat="server" Visible="false" CssClass="empty-state">

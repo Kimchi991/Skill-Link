@@ -195,6 +195,15 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.LinkButton lnkBusiness;
 
         /// <summary>
+        /// viewServices control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl viewServices;
+
+        /// <summary>
         /// litCatTitle control.
         /// </summary>
         /// <remarks>
@@ -229,6 +238,15 @@ namespace Skill_Link
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlEmpty;
+
+        /// <summary>
+        /// litFreelancerDebug control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litFreelancerDebug;
 
         /// <summary>
         /// rptFreelancers control.

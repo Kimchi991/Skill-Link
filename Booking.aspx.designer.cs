@@ -42,24 +42,6 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.HiddenField hdnFreelancerName;
 
         /// <summary>
-        /// hdnPaymentMethod control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPaymentMethod;
-
-        /// <summary>
-        /// hdnCurrentStep control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentStep;
-
-        /// <summary>
         /// hdnServiceTitle control.
         /// </summary>
         /// <remarks>
@@ -87,6 +69,24 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.HiddenField hdnTotalAmount;
 
         /// <summary>
+        /// hdnPaymentMethod control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnPaymentMethod;
+
+        /// <summary>
+        /// hdnCurrentStep control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentStep;
+
+        /// <summary>
         /// lblError control.
         /// </summary>
         /// <remarks>
@@ -105,15 +105,6 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.Panel pnlStep1;
 
         /// <summary>
-        /// litFreelancerInitial control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litFreelancerInitial;
-
-        /// <summary>
         /// litFreelancerName control.
         /// </summary>
         /// <remarks>
@@ -121,6 +112,15 @@ namespace Skill_Link
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litFreelancerName;
+
+        /// <summary>
+        /// litFreelancerInitial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litFreelancerInitial;
 
         /// <summary>
         /// txtBookingDate control.
@@ -150,15 +150,6 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.TextBox txtDescription;
 
         /// <summary>
-        /// txtNotes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNotes;
-
-        /// <summary>
         /// btnStep1Next control.
         /// </summary>
         /// <remarks>
@@ -175,6 +166,15 @@ namespace Skill_Link
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlStep2;
+
+        /// <summary>
+        /// txtNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNotes;
 
         /// <summary>
         /// btnStep2Back control.
