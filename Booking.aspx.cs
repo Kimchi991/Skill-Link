@@ -24,7 +24,7 @@ namespace Skill_Link
                     hdnTotalAmount.Value = price;
                     litServiceTitleDisplay.Text = title;
                     litFreelancerName.Text = freelancer;
-                    litFinalPrice.Text = string.Format("{0:N0}", decimal.Parse(price));
+                    litFinalPrice.Text = string.Format("{0:N0}", decimal.TryParse(price, out var p) ? p : 0m);
                 }
                 else
                 {
@@ -74,15 +74,15 @@ namespace Skill_Link
         // STEP 4 -> 5 (CONFIRM & SAVE TO DATABASE)
         protected void btnConfirmBooking_Click(object sender, EventArgs e)
         {
-            string bookingRef = "BK-" + DateTime.Now.Ticks.ToString().Substring(10);
+            string bookingRef  = "BK-" + DateTime.Now.Ticks.ToString().Substring(10);
             string clientEmail = Session["UserEmail"]?.ToString() ?? "Guest@SkillLink.com";
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
-                    string sql = @"INSERT INTO Bookings (BookingRef, ClientEmail, ServiceTitle, ProjectTitle, Description, BookingDate, TotalAmount, Status, CreatedAt)
-                                  VALUES (@ref, @email, @title, @pTitle, @desc, @date, @amount, 'Pending', GETDATE())";
+                    string sql = @"INSERT INTO Bookings (BookingRef, ClientEmail, FreelancerEmail, ServiceTitle, ProjectTitle, Description, BookingDate, Package, TotalAmount, Status, CreatedAt)
+                                   VALUES (@ref, @email, @freelancer, @title, @pTitle, @desc, @date, @pkg, @amount, 'Pending', GETDATE())";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@ref", bookingRef);
@@ -90,8 +90,10 @@ namespace Skill_Link
                     cmd.Parameters.AddWithValue("@title", hdnServiceTitle.Value);
                     cmd.Parameters.AddWithValue("@pTitle", txtProjectTitle.Text.Trim());
                     cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim());
-                    cmd.Parameters.AddWithValue("@date", DateTime.Parse(txtBookingDate.Text));
-                    cmd.Parameters.AddWithValue("@amount", decimal.Parse(hdnTotalAmount.Value));
+                    cmd.Parameters.AddWithValue("@date", DateTime.TryParse(txtBookingDate.Text, out var bd) ? bd : DateTime.Today);
+                    cmd.Parameters.AddWithValue("@amount", decimal.TryParse(hdnTotalAmount.Value, out var amt) ? amt : 0m);
+                    cmd.Parameters.AddWithValue("@freelancer", Request.QueryString["freelancer"] ?? "");
+                    cmd.Parameters.AddWithValue("@pkg", Request.QueryString["pkg"] ?? "Custom");
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
