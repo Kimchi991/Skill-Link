@@ -33,6 +33,15 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.HiddenField hdnActiveView;
 
         /// <summary>
+        /// hdnIsLoggedIn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnIsLoggedIn;
+
+        /// <summary>
         /// lnkHome control.
         /// </summary>
         /// <remarks>

@@ -26,6 +26,7 @@ namespace Skill_Link
         {
             // 1. Handle UI Visibility (Login/Profile)
             bool isLoggedIn = Session["UserEmail"] != null;
+            hdnIsLoggedIn.Value = isLoggedIn ? "1" : "0";
             string role = Session["UserRole"]?.ToString() ?? "";
 
             lnkLogin.Visible = !isLoggedIn;

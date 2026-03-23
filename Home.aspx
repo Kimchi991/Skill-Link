@@ -811,6 +811,7 @@
 <body>
 <form id="form1" runat="server">
 <asp:HiddenField ID="hdnActiveView" runat="server" ClientIDMode="Static" Value="services" />
+<asp:HiddenField ID="hdnIsLoggedIn" runat="server" ClientIDMode="Static" Value="0" />
 
     <!-- ══ HEADER ══ -->
     <header class="header">
@@ -1302,20 +1303,19 @@
         }
     }
 
-    function proceedToOrder() {
-        var pkgNames = ['Basic', 'Standard', 'Premium'];
-        var multipliers = [1, 1.5, 2];
-        var finalPrice = Math.round(currentPrice * multipliers[currentPkg]);
-        var params = new URLSearchParams({
-            title: currentTitle,
-            freelancer: currentSeller,
-            price: finalPrice,
-            pkg: pkgNames[currentPkg]
-        });
-        window.location.href = 'Order.aspx?' + params.toString();
+    function requireLogin() {
+        if (document.getElementById('hdnIsLoggedIn').value !== '1') {
+            window.location.href = 'Login.aspx?returnUrl=' + encodeURIComponent(window.location.pathname);
+            return false;
+        }
+        return true;
     }
 
+    function proceedToOrder() {
+        if (!requireLogin()) return;
+
     function bookFreelancer(email, username) {
+        if (!requireLogin()) return;
         var params = new URLSearchParams({
             freelancer: email,
             name: username
