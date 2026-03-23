@@ -297,5 +297,14 @@ private void LoadFreelancers()
                 // Just having this method here satisfies the compiler so Azure can build the site.
             }
         }
+        protected void rptServices_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "BuyService")
+            {
+                string[] details = e.CommandArgument.ToString().Split('|');
+                string url = $"Booking.aspx?title={Server.UrlEncode(details[0])}&price={details[1]}&freelancer={Server.UrlEncode(details[2])}";
+                Response.Redirect(url);
+            }
+        }
     }
 }

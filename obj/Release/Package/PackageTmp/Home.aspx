@@ -889,7 +889,7 @@
         </div>
 
         <div class="services-grid">
-            <asp:Repeater ID="rptServices" runat="server" OnItemDataBound="rptServices_ItemDataBound">
+            <asp:Repeater ID="rptServices" runat="server" OnItemCommand="rptServices_ItemCommand">
                 <ItemTemplate>
                     <div class="service-card" style="cursor:pointer;" onclick="event.stopPropagation();">
         
@@ -920,6 +920,13 @@
                                     '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
                                     '<%# string.Format("{0:N0}", Eval("Price") ?? 0) %>'
                                 );">View</button>
+                                <asp:LinkButton ID="btnBuyNow" runat="server" 
+                                    CommandName="BuyService" 
+                                    CommandArgument='<%# Eval("Title") + "|" + Eval("Price") + "|" + Eval("Name") %>' 
+                                    CssClass="buy-btn-neon" 
+                                    style="margin-left: 10px; text-decoration: none;">
+                                    Buy Now
+                                </asp:LinkButton>
                             </div>
                         </div>
                      </div> </ItemTemplate>

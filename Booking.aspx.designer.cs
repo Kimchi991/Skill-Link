@@ -24,24 +24,6 @@ namespace Skill_Link
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// hdnFreelancerEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnFreelancerEmail;
-
-        /// <summary>
-        /// hdnFreelancerName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnFreelancerName;
-
-        /// <summary>
         /// hdnServiceTitle control.
         /// </summary>
         /// <remarks>
@@ -51,15 +33,6 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.HiddenField hdnServiceTitle;
 
         /// <summary>
-        /// hdnServicePackage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnServicePackage;
-
-        /// <summary>
         /// hdnTotalAmount control.
         /// </summary>
         /// <remarks>
@@ -67,15 +40,6 @@ namespace Skill_Link
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTotalAmount;
-
-        /// <summary>
-        /// hdnPaymentMethod control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPaymentMethod;
 
         /// <summary>
         /// hdnCurrentStep control.
@@ -114,40 +78,13 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.Literal litFreelancerName;
 
         /// <summary>
-        /// litFreelancerInitial control.
+        /// litServiceTitleDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litFreelancerInitial;
-
-        /// <summary>
-        /// txtBookingDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBookingDate;
-
-        /// <summary>
-        /// txtProjectTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProjectTitle;
-
-        /// <summary>
-        /// txtDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescription;
+        protected global::System.Web.UI.WebControls.Literal litServiceTitleDisplay;
 
         /// <summary>
         /// btnStep1Next control.
@@ -168,22 +105,76 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.Panel pnlStep2;
 
         /// <summary>
-        /// txtNotes control.
+        /// txtProjectTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNotes;
+        protected global::System.Web.UI.WebControls.TextBox txtProjectTitle;
 
         /// <summary>
-        /// btnStep2Back control.
+        /// txtDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStep2Back;
+        protected global::System.Web.UI.WebControls.TextBox txtDescription;
+
+        /// <summary>
+        /// btnStep2Next control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStep2Next;
+
+        /// <summary>
+        /// pnlStep3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlStep3;
+
+        /// <summary>
+        /// txtBookingDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBookingDate;
+
+        /// <summary>
+        /// btnStep3Next control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStep3Next;
+
+        /// <summary>
+        /// pnlStep4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlStep4;
+
+        /// <summary>
+        /// litFinalPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litFinalPrice;
 
         /// <summary>
         /// btnConfirmBooking control.
@@ -195,13 +186,22 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.Button btnConfirmBooking;
 
         /// <summary>
-        /// pnlStep3 control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlStep3;
+        protected global::System.Web.UI.WebControls.Button btnBack;
+
+        /// <summary>
+        /// pnlStep5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlStep5;
 
         /// <summary>
         /// litBookingRef control.
