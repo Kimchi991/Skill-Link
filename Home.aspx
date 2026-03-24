@@ -881,7 +881,7 @@
 <div class="page-body">
 
     <!-- SERVICES VIEW -->
-    <div id="viewServices" runat="server" style="display:none;">
+style="display:block;">
         <div class="section-head">
             <div>
                 <h2><asp:Literal ID="litCatTitle" runat="server" /></h2>
@@ -1213,7 +1213,7 @@
     };
 
     function openModal(title, description, category, sellerName, sellerInitial, price) {
-        currentPrice = parseInt(price.replace(/,/g, ''), 10) || 0;
+currentPrice = parseInt((price || 0).toString().replace(/,/g, ''), 10) || 0;
         currentPkg = 0;
         currentTitle = title;
         currentSeller = sellerName;
@@ -1323,7 +1323,7 @@
         window.location.href = 'Booking.aspx?' + params.toString();
     }
 
-    function switchMainView(view) {
+function openModalSafe(title,desc,cat,seller,initial,price){title=title.replace(/'/g, "\\\\'");openModal(title,desc,cat,seller,initial,price);}&#10;function switchMainView(view) {
         var servicesView = document.getElementById('viewServices');
         var freelancersView = document.getElementById('viewFreelancers');
         var catNav = document.getElementById('catNavBar');
