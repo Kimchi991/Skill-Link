@@ -51,6 +51,15 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.HiddenField hdnCurrentStep;
 
         /// <summary>
+        /// hdnPaymentMethod control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnPaymentMethod;
+
+        /// <summary>
         /// lblError control.
         /// </summary>
         /// <remarks>
@@ -159,49 +168,40 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.Button btnStep3Next;
 
         /// <summary>
-        /// Panel1 control.
+        /// pnlStep4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.WebControls.Panel pnlStep4;
 
         /// <summary>
-        /// Literal1 control.
+        /// litFinalPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
+        protected global::System.Web.UI.WebControls.Literal litFinalPrice;
 
         /// <summary>
-        /// hdnPaymentMethod control.
+        /// btnConfirmBooking control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPaymentMethod;
+        protected global::System.Web.UI.WebControls.Button btnConfirmBooking;
 
         /// <summary>
-        /// Button1 control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-
-        /// <summary>
-        /// Button2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button btnBack;
 
         /// <summary>
         /// pnlStep5 control.

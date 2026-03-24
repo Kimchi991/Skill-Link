@@ -79,17 +79,14 @@ namespace Skill_Link
         {
             string bookingRef = "BK-" + DateTime.Now.ToString("yyyyMMdd") + "-" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
             string clientEmail = Session["UserEmail"]?.ToString() ?? "Guest@SkillLink.com";
-
+            string paymentMethod = hdnPaymentMethod.Value;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
                     string sql = @"INSERT INTO Bookings 
-                        (BookingRef, ClientEmail, FreelancerEmail, ServiceTitle, ProjectTitle, 
-                         Description, BookingDate, Package, TotalAmount, PaymentMethod, Status, CreatedAt)
-                        VALUES 
-                        (@ref, @email, @freelancer, @title, @pTitle, 
-                         @desc, @date, @pkg, @amount, @payMethod, 'Pending', GETDATE())";
+                        (BookingRef, ClientEmail, FreelancerEmail, ServiceTitle, ProjectTitle, Description, BookingDate, Package, TotalAmount, PaymentMethod, Status, CreatedAt)
+                        VALUES (@ref, @email, @freelancer, @title, @pTitle, @desc, @date, @pkg, @amount, @payMethod, 'Pending', GETDATE())";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@ref", bookingRef);
