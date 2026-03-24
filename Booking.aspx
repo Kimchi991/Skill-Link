@@ -122,8 +122,59 @@
         .pay-card.selected { border-color: #2dd4bf; background: rgba(45,212,191,0.15); box-shadow: 0 0 14px rgba(45,212,191,0.2); }
         .pay-card.selected .pay-check { opacity: 1 !important; }
 
+        /* ── BOOKING MODAL SHELL ── */
+        .booking-modal-header {
+            background: linear-gradient(135deg, #0f4c5c, #134e5e);
+            border-radius: 24px 24px 0 0;
+            padding: 20px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            color: #fff;
+            border-bottom: 1px solid rgba(45,212,191,0.25);
+        }
+        .bmh-left { display: flex; align-items: center; gap: 12px; }
+        .bmh-left .bmh-icon { font-size: 1.5rem; }
+        .bmh-left h2 { font-size: 1.1rem; font-weight: 800; color: #2dd4bf; margin-bottom: 2px; text-shadow: 0 0 10px rgba(45,212,191,0.4); }
+        .bmh-left p  { font-size: 0.75rem; color: #94a3b8; }
+        .bmh-close {
+            background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.2);
+            color: #94a3b8; width: 30px; height: 30px; border-radius: 50%;
+            cursor: pointer; font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; text-decoration: none;
+        }
+        .bmh-close:hover { background: rgba(45,212,191,0.2); color: #2dd4bf; }
+
+        /* ── BOOKING STEPPER ── */
+        .booking-modal-stepper {
+            display: flex; align-items: center; justify-content: center;
+            padding: 14px 20px; gap: 0;
+            border-bottom: 1px solid rgba(45,212,191,0.15);
+            flex-wrap: wrap; gap: 4px;
+        }
+        .bms-step {
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border-radius: 8px;
+            font-size: 11px; font-weight: 600;
+            color: #475569;
+            border: 1px solid #334155;
+            background: rgba(30,41,59,0.5);
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .bms-step.active {
+            background: rgba(45,212,191,0.15);
+            color: #2dd4bf;
+            border-color: rgba(45,212,191,0.5);
+            box-shadow: 0 0 10px rgba(45,212,191,0.15);
+        }
+        .bms-step.done {
+            background: rgba(45,212,191,0.08);
+            color: #0f766e;
+            border-color: rgba(45,212,191,0.25);
+        }
+        .bms-arrow { color: #334155; margin: 0 3px; font-size: 10px; flex-shrink: 0; }
+
         /* ── Booking Spinner Overlay ── */
-       .pay-card {
+        .pay-card {
             background: rgba(30,41,59,0.5);
             border: 1.5px solid #334155;
             border-radius: 14px;
@@ -160,6 +211,7 @@
         }
         @keyframes bspin { to { transform: rotate(360deg); } }
     </style>
+
 </head>
 <body class="dark-theme">
     <form id="form1" runat="server">
@@ -175,9 +227,35 @@
 
                 <asp:Label ID="lblError" runat="server" ForeColor="#ef4444" Visible="false" />
 
+                <%-- Modal Header --%>
+                <div class="booking-modal-header">
+                    <div class="bmh-left">
+                        <span class="bmh-icon">📋</span>
+                        <div>
+                            <h2>Secure Booking</h2>
+                            <p>Skill-Link — Freelancer Booking Flow</p>
+                        </div>
+                    </div>
+                    <a href="Home.aspx" class="bmh-close" title="Close"><i class="fas fa-times"></i></a>
+                </div>
+
+                <%-- Modal Stepper --%>
+                <div class="booking-modal-stepper" id="bookingStepper">
+                    <div class="bms-step active" id="bmsStep1"><i class="fas fa-check"></i> Confirm</div>
+                    <span class="bms-arrow"><i class="fas fa-chevron-right"></i></span>
+                    <div class="bms-step" id="bmsStep2"><i class="fas fa-clipboard"></i> Scope</div>
+                    <span class="bms-arrow"><i class="fas fa-chevron-right"></i></span>
+                    <div class="bms-step" id="bmsStep3"><i class="fas fa-calendar"></i> Delivery</div>
+                    <span class="bms-arrow"><i class="fas fa-chevron-right"></i></span>
+                    <div class="bms-step" id="bmsStep4"><i class="fas fa-credit-card"></i> Payment</div>
+                    <span class="bms-arrow"><i class="fas fa-chevron-right"></i></span>
+                    <div class="bms-step" id="bmsStep5"><i class="fas fa-check-circle"></i> Done</div>
+                </div>
+
                 <asp:Panel ID="pnlStep1" runat="server">
                     <span class="step-indicator">Step 1 of 5</span>
                     <h2 class="neon-text">Confirm Booking</h2>
+
                     <p>You are booking <strong><asp:Literal ID="litFreelancerName" runat="server" /></strong> for:</p>
                     <div style="background: rgba(45, 212, 191, 0.1); padding: 15px; border-radius: 10px; border-left: 4px solid #2dd4bf;">
                          <asp:Literal ID="litServiceTitleDisplay" runat="server" />
@@ -208,7 +286,9 @@
                         <asp:TextBox ID="txtBookingDate" runat="server" TextMode="Date" CssClass="cyber-input" />
                     </div>
                     <asp:Button ID="btnStep3Next" runat="server" Text="Next: Summary" OnClick="btnStep3Next_Click" CssClass="btn-neon" />
+       
                 </asp:Panel>
+                </div>
 
                 <%-- REPLACE WITH THIS --%>
                 <asp:Panel ID="pnlStep4" runat="server" Visible="false">
@@ -268,6 +348,22 @@
                 </div>
 
                 <script>
+                    function syncBookingStepper(n) {
+                        for (var i = 1; i <= 5; i++) {
+                            var el = document.getElementById('bmsStep' + i);
+                            if (!el) continue;
+                            el.classList.remove('active', 'done');
+                            if (i < n) el.classList.add('done');
+                            if (i === n) el.classList.add('active');
+                        }
+                    }
+
+                    // Sync stepper on load from server step
+                    window.addEventListener('DOMContentLoaded', function() {
+                        var step = parseInt(document.getElementById('<%= hdnCurrentStep.ClientID %>').value) || 1;
+                        syncBookingStepper(step);
+                    });
+
                     function selectBookingPayment(method, el) {
                         document.querySelectorAll('.pay-card').forEach(function (c) { c.classList.remove('selected'); });
                         el.classList.add('selected');

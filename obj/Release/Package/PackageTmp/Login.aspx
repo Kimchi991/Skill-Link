@@ -566,8 +566,8 @@
 
                     <div class="or-divider">or continue with</div>
                     <div class="social-row">
-                        <a href="#" class="btn-social"><i class="fab fa-google"></i> Google</a>
-                        <a href="#" class="btn-social"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a class="btn-social" style="cursor:pointer;" onclick="mockOAuth('Google')"><i class="fab fa-google"></i> Google</a>
+                        <a class="btn-social" style="cursor:pointer;" onclick="mockOAuth('Facebook')"><i class="fab fa-facebook-f"></i> Facebook</a>
                     </div>
                 </div>
 
@@ -634,6 +634,34 @@
         if (loginErr && loginErr.classList.contains('show')) switchTab('login');
         if (regErr && regErr.classList.contains('show')) switchTab('register');
     })();
+    
+    function mockOAuth(provider) {
+        var overlay = document.createElement('div');
+            overlay.id = 'oauthOverlay';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+            overlay.innerHTML =
+            '<div style="background:#1c2230;border-radius:16px;padding:36px 40px;text-align:center;min-width:280px;">' +
+                '<div id="oauthSpinner" style="width:48px;height:48px;border-radius:50%;border:3px solid rgba(72,229,194,0.2);border-top-color:#48e5c2;animation:spin 0.8s linear infinite;margin:0 auto 16px;"></div>' +
+                '<p style="color:#e2e8f0;font-size:15px;font-weight:600;margin-bottom:4px;">Connecting to ' + provider + '...</p>' +
+                '<p style="color:#64748b;font-size:12px;">Please wait</p>' +
+                '<div id="oauthMsg" style="display:none;margin-top:16px;">' +
+                    '<p style="color:#fbbf24;font-size:13px;"><i class="fas fa-clock" style="margin-right:6px;"></i>' + provider + ' sign-in is coming soon!</p>' +
+                    '<p style="color:#64748b;font-size:12px;margin-top:4px;">Please use email and password for now.</p>' +
+                    '<button onclick="document.getElementById(\'oauthOverlay\').remove()" style="margin-top:14px;padding:8px 20px;background:#48e5c2;color:#062023;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Got it</button>' +
+                    '</div>' +
+                '</div>';
+            if (!document.getElementById('spinStyle')) {
+            var s = document.createElement('style');
+            s.id = 'spinStyle';
+            s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+            document.head.appendChild(s);
+        }
+            document.body.appendChild(overlay);
+            setTimeout(function() {
+                document.getElementById('oauthSpinner').style.display = 'none';
+            document.getElementById('oauthMsg').style.display = 'block';
+        }, 2000);
+    }
 </script>
 </body>
 </html>

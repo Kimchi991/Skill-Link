@@ -1,17 +1,12 @@
-# Skill-Link Fixes - Browse Freelancers Not Showing
+# Skill-Link Project TODO
 
-## [1/5] ✅ Create TODO.md
-
-## [2/5] ✅ Edit Home.aspx.cs (query fixed, debug Literal, postback reload)
-
-## [3/5] ✅ Test query (returns freelancers)
-
-## [4/5] ✅ Fixed compile error (commented debug line), markup ready
-
-## [5/5] Deploy test + verify
-
-**Current Status:** Reload site - check "Browse Freelancers (Loaded 6 freelancers)". Toggle button. If shows count but no cards, Skills NULL OK (shows 'No skills'). If error, check Debug.WriteLine.
-
-Next: Confirm live or add skills data?
-
+## Current Task: Modal Shell Implementation for Order/Booking
+✅ 1. Inject Order.aspx modal shell CSS  
+✅ 2. Wrap Order.aspx page-wrap in modal divs  
+✅ 3. Close Order.aspx modal divs after footer  
+✅ 4. Sync Order.aspx stepper in goStep()  
+✅ 5. Inject Booking.aspx dark neon stepper CSS  
+✅ 6. Add Booking.aspx header + stepper HTML  
+✅ 7. Add Booking.aspx syncBookingStepper() JS  
+- [ ] 8. Test both pages (modal renders + steppers sync)
 

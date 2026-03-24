@@ -610,15 +610,23 @@
         var cat   = document.getElementById('<%= ddlCategory.ClientID %>').value;
         var price = document.getElementById('<%= txtPrice.ClientID %>').value.trim();
 
-        if (!title) { alert('Please enter a service title.'); return false; }
-        if (!desc)  { alert('Please enter a description.'); return false; }
-        if (!cat)   { alert('Please select a category.'); return false; }
-        if (!price || isNaN(price) || parseFloat(price) <= 0) { alert('Please enter a valid price.'); return false; }
+        if (!title) { showAlert('Please enter a service title.', 'error'); return false; }
+        if (!desc) { showAlert('Please enter a description.', 'error'); return false; }
+        if (!cat) { showAlert('Please select a category.', 'error'); return false; }
+        if (!price || isNaN(price) || parseFloat(price) <= 0) { showAlert('Please enter a valid price.', 'error'); return false; }
         return true;
     }
 
     /* init counter */
     updateCounter('title');
+
+    function showFormError(msg) {
+        var lbl = document.getElementById('<%= lblAlert.ClientID %>');
+        if (lbl) {
+            lbl.textContent = msg; lbl.className = 'alert show';
+            setTimeout(function () { lbl.className = 'alert'; }, 4000);
+        }
+    }
 </script>
 </body>
 </html>

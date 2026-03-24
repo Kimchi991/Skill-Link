@@ -268,10 +268,9 @@ private void LoadFreelancers()
                     da.Fill(dt);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Log error - create debug label in markup later
-             
+                // silent fail
             }
 
             rptFreelancers.DataSource = dt;

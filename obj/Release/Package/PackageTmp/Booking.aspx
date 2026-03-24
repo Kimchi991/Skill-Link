@@ -104,17 +104,74 @@
             color: #94a3b8;
             margin-top: 10px;
         }
+        /* ── Booking Payment Cards ── */
+        .pay-card {
+            background: rgba(30,41,59,0.5);
+            border: 1.5px solid #334155;
+            border-radius: 14px;
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+        .pay-card:hover { border-color: #2dd4bf; background: rgba(45,212,191,0.07); }
+        .pay-card.selected { border-color: #2dd4bf; background: rgba(45,212,191,0.15); box-shadow: 0 0 14px rgba(45,212,191,0.2); }
+        .pay-card.selected .pay-check { opacity: 1 !important; }
+
+        /* ── Booking Spinner Overlay ── */
+       .pay-card {
+            background: rgba(30,41,59,0.5);
+            border: 1.5px solid #334155;
+            border-radius: 14px;
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+        .pay-card:hover { border-color: #2dd4bf; background: rgba(45,212,191,0.07); }
+        .pay-card.selected { border-color: #2dd4bf; background: rgba(45,212,191,0.15); box-shadow: 0 0 14px rgba(45,212,191,0.2); }
+        .pay-card.selected .pay-check { opacity: 1 !important; }
+        #bookingSpinner {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2,6,23,0.9);
+            backdrop-filter: blur(14px);
+            z-index: 99999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+        }
+        #bookingSpinner .b-ring {
+            width: 56px; height: 56px;
+            border: 4px solid rgba(45,212,191,0.2);
+            border-top-color: #2dd4bf;
+            border-radius: 50%;
+            animation: bspin 0.9s linear infinite;
+        }
+        @keyframes bspin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="dark-theme">
     <form id="form1" runat="server">
         
-        <div class="booking-overlay">
+        <
+            class="booking-overlay">
             <div class="glass-card">
                 
                 <asp:HiddenField ID="hdnServiceTitle" runat="server" />
                 <asp:HiddenField ID="hdnTotalAmount" runat="server" />
                 <asp:HiddenField ID="hdnCurrentStep" runat="server" Value="1" />
+                <asp:HiddenField ID="hdnPaymentMethod" runat="server" Value="" />
 
                 <asp:Label ID="lblError" runat="server" ForeColor="#ef4444" Visible="false" />
 
@@ -151,14 +208,52 @@
                         <asp:TextBox ID="txtBookingDate" runat="server" TextMode="Date" CssClass="cyber-input" />
                     </div>
                     <asp:Button ID="btnStep3Next" runat="server" Text="Next: Summary" OnClick="btnStep3Next_Click" CssClass="btn-neon" />
+       
                 </asp:Panel>
+                </div>
 
+                <%-- REPLACE WITH THIS --%>
                 <asp:Panel ID="pnlStep4" runat="server" Visible="false">
                     <span class="step-indicator">Step 4 of 5</span>
-                    <h2 class="neon-text">Review Order</h2>
-                    <p>Total Payment: <span style="color:#2dd4bf; font-weight:bold;">₱<asp:Literal ID="litFinalPrice" runat="server" /></span></p>
-                    <asp:Button ID="btnConfirmBooking" runat="server" Text="Confirm & Place Order" OnClick="btnConfirmBooking_Click" CssClass="btn-neon" />
-                    <asp:Button ID="btnBack" runat="server" Text="Wait, Go Back" OnClick="btnBack_Click" CssClass="btn-neon btn-outline" />
+                    <h2 class="neon-text">Payment Method</h2>
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);border-radius:10px;padding:12px 16px;margin-bottom:20px;">
+                        <span style="color:#94a3b8;font-size:0.85rem;">Total Due</span>
+                        <span style="color:#2dd4bf;font-weight:bold;">₱<asp:Literal ID="litFinalPrice" runat="server" /></span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                        <div class="pay-card" id="card-gcash" onclick="selectBookingPayment('GCash',this)">
+                            <i class="fas fa-mobile-alt" style="font-size:1.5rem;color:#00a3ff;"></i>
+                            <span style="font-weight:600;font-size:0.9rem;color:#f8fafc;">GCash</span>
+                            <span class="pay-check" style="font-size:0.75rem;color:#2dd4bf;opacity:0;transition:opacity 0.2s;">✓ Selected</span>
+                        </div>
+                        <div class="pay-card" id="card-maya" onclick="selectBookingPayment('Maya',this)">
+                            <i class="fas fa-wallet" style="font-size:1.5rem;color:#22c55e;"></i>
+                            <span style="font-weight:600;font-size:0.9rem;color:#f8fafc;">Maya</span>
+                            <span class="pay-check" style="font-size:0.75rem;color:#2dd4bf;opacity:0;transition:opacity 0.2s;">✓ Selected</span>
+                        </div>
+                        <div class="pay-card" id="card-bank" onclick="selectBookingPayment('Bank Transfer',this)">
+                            <i class="fas fa-university" style="font-size:1.5rem;color:#fbbf24;"></i>
+                            <span style="font-weight:600;font-size:0.9rem;color:#f8fafc;">Bank Transfer</span>
+                            <span class="pay-check" style="font-size:0.75rem;color:#2dd4bf;opacity:0;transition:opacity 0.2s;">✓ Selected</span>
+                        </div>
+                        <div class="pay-card" id="card-cash" onclick="selectBookingPayment('Cash',this)">
+                            <i class="fas fa-money-bill-wave" style="font-size:1.5rem;color:#a855f7;"></i>
+                            <span style="font-weight:600;font-size:0.9rem;color:#f8fafc;">Cash</span>
+                            <span class="pay-check" style="font-size:0.75rem;color:#2dd4bf;opacity:0;transition:opacity 0.2s;">✓ Selected</span>
+                        </div>
+                    </div>
+
+                    <div id="bookingPayValidation" style="display:none;color:#ef4444;font-size:0.82rem;margin-bottom:10px;">
+                        ⚠ Please select a payment method to continue.
+                    </div>
+
+                    <asp:Button ID="btnConfirmBooking" runat="server" Text="Confirm &amp; Place Order"
+                        OnClick="btnConfirmBooking_Click" CssClass="btn-neon"
+                        OnClientClick="return bookingSimulatePayment();" />
+                    <asp:Button ID="btnBack" runat="server" Text="Wait, Go Back"
+                        OnClick="btnBack_Click" CssClass="btn-neon btn-outline" />
                 </asp:Panel>
 
                 <asp:Panel ID="pnlStep5" runat="server" Visible="false" style="text-align:center;">
@@ -168,8 +263,34 @@
                     <a href="Home.aspx" class="btn-neon" style="display:block; text-decoration:none;">Back to Home</a>
                 </asp:Panel>
 
-            </div>
-        </div>
+                <<div id="bookingSpinner">
+                    <div class="b-ring"></div>
+                    <p style="color:#2dd4bf;font-weight:600;font-size:1rem;" id="bSpinMethod">Processing...</p>
+                    <p style="color:#64748b;font-size:0.85rem;" id="bSpinAmount"></p>
+                </div>
+
+                <script>
+                    function selectBookingPayment(method, el) {
+                        document.querySelectorAll('.pay-card').forEach(function (c) { c.classList.remove('selected'); });
+                        el.classList.add('selected');
+                        document.getElementById('<%= hdnPaymentMethod.ClientID %>').value = method;
+                        document.getElementById('bookingPayValidation').style.display = 'none';
+                    }
+
+                    function bookingSimulatePayment() {
+                        var method = document.getElementById('<%= hdnPaymentMethod.ClientID %>').value;
+                        if (!method) {
+                            document.getElementById('bookingPayValidation').style.display = 'block';
+                            return false;
+                        }
+                        var spinner = document.getElementById('bookingSpinner');
+                        spinner.style.display = 'flex';
+                        document.getElementById('bSpinMethod').textContent = 'Processing via ' + method + '...';
+                        document.getElementById('bSpinAmount').textContent = '₱' + parseFloat(document.getElementById('<%= hdnTotalAmount.ClientID %>').value || 0).toLocaleString();
+                        setTimeout(function () { document.getElementById('form1').submit(); }, 2500);
+                        return false;
+                    }
+                </script>
     </form>
 </body>
 </html>
