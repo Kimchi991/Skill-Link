@@ -469,13 +469,40 @@
 
         .sc-body { padding: 16px; }
         .sc-category { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent-dark); margin-bottom: 6px; }
-        .sc-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sc-title { 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--text); 
+    line-height: 1.45; 
+    margin-bottom: 8px; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+    overflow-wrap: break-word;
+    line-clamp: 2;
+}
         .sc-seller { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
         .sc-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #2563eb); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
         .sc-seller-name { font-size: 12px; color: var(--muted); font-weight: 500; }
         .sc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
-        .sc-price { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: var(--text); }
-        .sc-price small { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--muted); font-weight: 400; }
+        .sc-price { 
+            font-family: 'Syne', sans-serif; 
+            font-size: 20px; 
+            font-weight: 800; 
+            color: #22C55E; 
+            text-shadow: 0 0 12px rgba(34,197,94,0.6);
+            line-height: 1.2;
+        }
+        .sc-price small { 
+            font-family: 'DM Sans', sans-serif; 
+            font-size: 11px; 
+            color: #22C55E; 
+            font-weight: 500;
+            opacity: 0.9;
+            display: block;
+        }
+
         .sc-cta {
             font-size: 12px;
             font-weight: 600;
@@ -487,8 +514,11 @@
             cursor: pointer;
             text-decoration: none;
             transition: background 0.14s, color 0.14s;
+            line-height: 1.2;
         }
         .sc-cta:hover { background: var(--accent); color: #fff; }
+        .sc-cta.buy-btn-neon { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 8px 16px; font-weight: 700; box-shadow: 0 4px 12px rgba(34,197,94,0.3); margin-left: 8px; }
+        .sc-cta.buy-btn-neon:hover { background: linear-gradient(135deg, #16a34a, #15803d); transform: translateY(-1px); }
 
         /* empty state */
         .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--muted); }
@@ -907,27 +937,12 @@
                                 <span class="sc-seller-name"><%# ShortenName(Eval("Name").ToString()) %></span>
                             </div>
 
+
                             <div class="sc-footer">
                                 <div class="sc-price">
-                                    ₱<%# string.Format("{0:N0}", Eval("Price")) %>
-                                    <small>/ starting</small>
+                                    <%# GetDisplayPrice(Eval("Price")) %>
                                 </div>
-
-                                <button type="button" class="view-btn" onclick="event.stopPropagation(); openModalSafe(
-                                    '<%# Server.HtmlEncode(Eval("Title")?.ToString() ?? "Untitled").Replace("'","\\\\'") %>',
-                                    '<%# Server.HtmlEncode(Eval("Description")?.ToString() ?? "").Replace("'","\\\\'") %>',
-                                    '<%# Eval("Category")?.ToString() ?? "Other" %>',
-                                    '<%# ShortenName(Eval("Name")?.ToString() ?? "Anonymous") %>',
-                                    '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
-                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 0) %>'
-                                );">View</button>
-                                <asp:LinkButton ID="btnBuyNow" runat="server" 
-                                    CommandName="BuyService" 
-                                    CommandArgument='<%# Eval("Title") + "|" + Eval("Price") + "|" + Eval("Name") %>' 
-                                    CssClass="buy-btn-neon" 
-                                    style="margin-left: 10px; text-decoration: none;">
-                                    Buy Now
-                                </asp:LinkButton>
+                                <button class="sc-cta" onclick="openModalSafe('<%# Server.HtmlEncode(Eval("Title") ?? "Untitled") %>', '<%# Server.HtmlEncode(Eval("Description") ?? "") %>', '<%# Eval("Category") ?? "Other" %>', '<%# ShortenName(Eval("Name") ?? "Anon") %>', '<%# GetInitial(Eval("Name") ?? "?") %>', '<%# (Eval("Price") ?? 500).ToString() %>');">View Details</button>
                             </div>
                         </div>
                      </div> </ItemTemplate>
@@ -986,7 +1001,7 @@
 
                             <%-- Book Button --%>
                             <button type="button" class="fl-book-btn"
-                                onclick="bookFreelancer('<%# Server.HtmlEncode(Eval("Email").ToString()) %>','<%# Server.HtmlEncode(Eval("Username").ToString()) %>')">
+                                onclick="bookFreelancer('<%# Server.HtmlEncode(Eval("Email").ToString()) %>','<%# Server.HtmlEncode(Eval("Username").ToString()) %>');
                                 <i class="fas fa-calendar-plus"></i> Book this Freelancer
                             </button>
                         </div>
@@ -1212,6 +1227,10 @@
         'Business': 'fas fa-briefcase'
     };
 
+function openModalSafe(title, description, category, sellerName, sellerInitial, price) {
+        var p = parseInt(price.replace(/,/g, ''), 10) || 500;
+        openModal(title, description, category, sellerName, sellerInitial, p);
+    }
     function openModal(title, description, category, sellerName, sellerInitial, price) {
         currentPrice = parseInt(price.replace(/,/g, ''), 10) || 0;
         currentPkg = 0;
@@ -1233,8 +1252,8 @@
 
         // Prices (basic = listed, standard = 2x, premium = 3x)
         var basicP = currentPrice;
-        var standardP = Math.round(currentPrice * 2);
-        var premiumP = Math.round(currentPrice * 3);
+        var standardP = Math.round(currentPrice * 1.5);
+        var premiumP = Math.round(currentPrice * 2);
         document.getElementById('modalPriceBasic').textContent = '₱' + basicP.toLocaleString();
         document.getElementById('modalPriceStandard').textContent = '₱' + standardP.toLocaleString();
         document.getElementById('modalPricePremium').textContent = '₱' + premiumP.toLocaleString();

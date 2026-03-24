@@ -474,8 +474,22 @@
         .sc-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #2563eb); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
         .sc-seller-name { font-size: 12px; color: var(--muted); font-weight: 500; }
         .sc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
-        .sc-price { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: var(--text); }
-        .sc-price small { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--muted); font-weight: 400; }
+        .sc-price { 
+            font-family: 'Syne', sans-serif; 
+            font-size: 20px; 
+            font-weight: 800; 
+            color: #22C55E; 
+            text-shadow: 0 0 12px rgba(34,197,94,0.6);
+            line-height: 1.2;
+        }
+        .sc-price small { 
+            font-family: 'DM Sans', sans-serif; 
+            font-size: 11px; 
+            color: #22C55E; 
+            font-weight: 500;
+            opacity: 0.9;
+            display: block;
+        }
         .sc-cta {
             font-size: 12px;
             font-weight: 600;
@@ -909,17 +923,21 @@
 
                             <div class="sc-footer">
                                 <div class="sc-price">
-                                    ₱<%# string.Format("{0:N0}", Eval("Price")) %>
-                                    <small>/ starting</small>
+                                    <%# GetDisplayPrice(Eval("Price")) %>
                                 </div>
 
-                                <button type="button" class="view-btn" onclick="event.stopPropagation(); openModalSafe(
-                                    '<%# Server.HtmlEncode(Eval("Title")?.ToString() ?? "Untitled").Replace("'","\\\\'") %>',
-                                    '<%# Server.HtmlEncode(Eval("Description")?.ToString() ?? "").Replace("'","\\\\'") %>',
+onclick="event.stopPropagation(); openModal(
+                                    '<%# Server.HtmlEncode(Eval("Title")?.ToString() ?? "Untitled") %>',
+                                    '<%# Server.HtmlEncode(Eval("Description")?.ToString() ?? "") %>',
                                     '<%# Eval("Category")?.ToString() ?? "Other" %>',
                                     '<%# ShortenName(Eval("Name")?.ToString() ?? "Anonymous") %>',
                                     '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
-                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 0) %>'
+                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 500) %>'
+                                ); event.preventDefault();" data-title="<%# Eval("Title") %>" data-desc="<%# Eval("Description") %>">
+                                    '<%# Eval("Category")?.ToString() ?? "Other" %>',
+                                    '<%# ShortenName(Eval("Name")?.ToString() ?? "Anonymous") %>',
+                                    '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
+                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 500) %>'
                                 );">View</button>
                                 <asp:LinkButton ID="btnBuyNow" runat="server" 
                                     CommandName="BuyService" 
@@ -1212,7 +1230,7 @@
         'Business': 'fas fa-briefcase'
     };
 
-    function openModal(title, description, category, sellerName, sellerInitial, price) {
+function openModal(title, description, category, sellerName, sellerInitial, price) {
         currentPrice = parseInt(price.replace(/,/g, ''), 10) || 0;
         currentPkg = 0;
         currentTitle = title;
