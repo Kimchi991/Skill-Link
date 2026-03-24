@@ -159,40 +159,49 @@ namespace Skill_Link
         protected global::System.Web.UI.WebControls.Button btnStep3Next;
 
         /// <summary>
-        /// pnlStep4 control.
+        /// Panel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlStep4;
+        protected global::System.Web.UI.WebControls.Panel Panel1;
 
         /// <summary>
-        /// litFinalPrice control.
+        /// Literal1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litFinalPrice;
+        protected global::System.Web.UI.WebControls.Literal Literal1;
 
         /// <summary>
-        /// btnConfirmBooking control.
+        /// hdnPaymentMethod control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmBooking;
+        protected global::System.Web.UI.WebControls.HiddenField hdnPaymentMethod;
 
         /// <summary>
-        /// btnBack control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
+        protected global::System.Web.UI.WebControls.Button Button1;
+
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
 
         /// <summary>
         /// pnlStep5 control.

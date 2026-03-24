@@ -73,6 +73,7 @@ namespace Skill_Link
             ShowStep(3);
         }
 
+        string paymentMethod = hdnPaymentMethod.Value;
         // STEP 4 -> 5 (CONFIRM & SAVE TO DATABASE)
         protected void btnConfirmBooking_Click(object sender, EventArgs e)
         {
@@ -83,8 +84,12 @@ namespace Skill_Link
             {
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
-                    string sql = @"INSERT INTO Bookings (BookingRef, ClientEmail, FreelancerEmail, ServiceTitle, ProjectTitle, Description, BookingDate, Package, TotalAmount, Status, CreatedAt)
-                                   VALUES (@ref, @email, @freelancer, @title, @pTitle, @desc, @date, @pkg, @amount, 'Pending', GETDATE())";
+                    string sql = @"INSERT INTO Bookings 
+                        (BookingRef, ClientEmail, FreelancerEmail, ServiceTitle, ProjectTitle, 
+                         Description, BookingDate, Package, TotalAmount, PaymentMethod, Status, CreatedAt)
+                        VALUES 
+                        (@ref, @email, @freelancer, @title, @pTitle, 
+                         @desc, @date, @pkg, @amount, @payMethod, 'Pending', GETDATE())";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@ref", bookingRef);
@@ -96,6 +101,7 @@ namespace Skill_Link
                     cmd.Parameters.AddWithValue("@amount", decimal.TryParse(hdnTotalAmount.Value, out var amt) ? amt : 0m);
                     cmd.Parameters.AddWithValue("@freelancer", Request.QueryString["freelancer"] ?? "");
                     cmd.Parameters.AddWithValue("@pkg", Request.QueryString["pkg"] ?? "Custom");
+                    cmd.Parameters.AddWithValue("@payMethod", paymentMethod);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
