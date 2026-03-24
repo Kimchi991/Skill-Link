@@ -1312,6 +1312,7 @@
 
     function proceedToOrder() {
         if (!requireLogin()) return;
+    }
 
     function bookFreelancer(email, username) {
         if (!requireLogin()) return;

@@ -341,7 +341,7 @@
                     <a href="Home.aspx" class="btn-neon" style="display:block; text-decoration:none;">Back to Home</a>
                 </asp:Panel>
 
-                <<div id="bookingSpinner">
+                <div id="bookingSpinner">
                     <div class="b-ring"></div>
                     <p style="color:#2dd4bf;font-weight:600;font-size:1rem;" id="bSpinMethod">Processing...</p>
                     <p style="color:#64748b;font-size:0.85rem;" id="bSpinAmount"></p>

@@ -416,7 +416,73 @@
             .step-label { display: none; }
             .header { padding: 0 16px; }
         }
+
+        /* ── ESCROW MODAL SHELL ── */
+        .order-modal-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 500; padding: 20px;
+            padding-top: 82px; /* clears fixed header */
+        }
+        .order-modal {
+            background: var(--card);
+            border-radius: 20px;
+            width: 100%; max-width: 1060px;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+        }
+        .order-modal-header {
+            background: linear-gradient(135deg, #0f766e, #0d9488);
+            border-radius: 20px 20px 0 0;
+            padding: 20px 28px;
+            display: flex; align-items: center; justify-content: space-between;
+            color: #fff;
+        }
+        .omh-left { display: flex; align-items: center; gap: 12px; }
+        .omh-left .omh-icon { font-size: 1.6rem; }
+        .omh-left h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 2px; font-family: 'Syne', sans-serif; }
+        .omh-left p  { font-size: 0.78rem; opacity: 0.8; }
+        .omh-close {
+            background: rgba(255,255,255,0.15); border: none; color: #fff;
+            width: 32px; height: 32px; border-radius: 50%;
+            cursor: pointer; font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s; text-decoration: none;
+        }
+        .omh-close:hover { background: rgba(255,255,255,0.3); }
+
+        /* ── MODAL STEPPER ── */
+        .order-modal-stepper {
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px 28px; gap: 0;
+            border-bottom: 1px solid var(--border);
+            background: var(--card);
+            flex-wrap: wrap;
+        }
+        .oms-step {
+            display: flex; align-items: center; gap: 7px;
+            padding: 7px 14px; border-radius: 8px;
+            font-size: 12px; font-weight: 600; color: var(--muted);
+            border: 1.5px solid var(--border);
+            background: var(--bg);
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .oms-step.active { background: var(--accent); color: #062023; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(72,229,194,0.2); }
+        .oms-step.done   { background: rgba(72,229,194,0.1); color: var(--accent-dark); border-color: rgba(72,229,194,0.35); }
+        .oms-arrow { color: var(--border); margin: 0 5px; font-size: 11px; flex-shrink: 0; }
+        .order-modal-body { padding: 0; }
+
+        @media(max-width:680px){
+            .oms-step { padding:5px 9px; font-size:11px; }
+            .order-modal-header { padding: 16px 18px; }
+        }
     </style>
+
 </head>
 <body>
 <form id="form1" runat="server">
@@ -462,14 +528,45 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="page-wrap">
+    <!-- MODAL SHELL -->
+    <div class="order-modal-backdrop">
+    <div class="order-modal">
 
-        <!-- LEFT COLUMN -->
-        <div class="order-main">
+        <!-- Modal Header -->
+        <div class="order-modal-header">
+            <div class="omh-left">
+                <span class="omh-icon">🛒</span>
+                <div>
+                    <h2>Place Your Order</h2>
+                    <p>Secure checkout — powered by SkillLink</p>
+                </div>
+            </div>
+            <a href="Home.aspx" class="omh-close" title="Close"><i class="fas fa-times"></i></a>
+        </div>
 
-            <!-- ════ STEP 1: SERVICE DETAILS ════ -->
-            <div class="step-panel active" id="panel1">
+        <!-- Modal Stepper -->
+        <div class="order-modal-stepper" id="modalStepper">
+            <div class="oms-step active" id="omsStep1"><i class="fas fa-search"></i> Service</div>
+            <span class="oms-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="oms-step" id="omsStep2"><i class="fas fa-clipboard-list"></i> Requirements</div>
+            <span class="oms-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="oms-step" id="omsStep3"><i class="fas fa-check-square"></i> Confirm</div>
+            <span class="oms-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="oms-step" id="omsStep4"><i class="fas fa-credit-card"></i> Payment</div>
+            <span class="oms-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="oms-step" id="omsStep5"><i class="fas fa-check-circle"></i> Done</div>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="order-modal-body">
+        <div class="page-wrap">
+
+            <!-- LEFT COLUMN -->
+            <div class="order-main">
+
+                <!-- ════ STEP 1: SERVICE DETAILS ════ -->
+                <div class="step-panel active" id="panel1">
+
                 <div class="card">
                     <div class="card-title"><i class="fas fa-search"></i> Service Details</div>
 
@@ -841,10 +938,13 @@
 
     </div>
     
-    <br />
-    <br />
-    <br />
-    <br />
+                </div><!-- /order-main -->
+            </div><!-- /order-sidebar -->
+        </div><!-- /page-wrap -->
+    </div><!-- /order-modal-body -->
+</div><!-- /order-modal -->
+</div><!-- /order-modal-backdrop -->
+
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-inner">
@@ -863,6 +963,7 @@
     </footer>
 
 </form>
+
 
 <script>
     /* ═══════════════════════════════════════════
@@ -957,6 +1058,13 @@
             var si = document.getElementById('stepItem' + i);
             si.classList.remove('active', 'done');
             if (i < n) si.classList.add('done');
+            
+            // Sync modal stepper
+            var ms = document.getElementById('omsStep' + i);
+            if (ms) {
+                ms.classList.remove('active', 'done');
+                if (i < n) ms.classList.add('done');
+            }
         }
         // Active connectors
         for (var j = 1; j <= 4; j++) {
@@ -966,6 +1074,8 @@
         // Activate current
         document.getElementById('panel' + n).classList.add('active');
         document.getElementById('stepItem' + n).classList.add('active');
+        var msActive = document.getElementById('omsStep' + n);
+        if (msActive) msActive.classList.add('active');
         state.currentStep = n;
 
         // Populate confirm step
@@ -973,6 +1083,7 @@
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
 
     /* ═══════════════════════════════════════════
        PACKAGE SELECTION

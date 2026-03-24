@@ -106,9 +106,9 @@ namespace Skill_Link
 
         private void SetPackagePrices(int basePrice)
         {
-            litPriceBasic.Text = string.Format("{0:N0}", basePrice);
-            litPriceStandard.Text = string.Format("{0:N0}", basePrice * 2);
-            litPricePremium.Text = string.Format("{0:N0}", basePrice * 3);
+            litPriceBasic.Text = string.Format("{0:N0}", basePrice);                  // Quick 1–3 days
+            litPriceStandard.Text = string.Format("{0:N0}", (int)(basePrice * 1.5));     // Standard 4–7 days
+            litPricePremium.Text = string.Format("{0:N0}", basePrice * 2);              // Extended 8–14 days
         }
 
         // ── Place Order ───────────────────────────────────────────────────────
