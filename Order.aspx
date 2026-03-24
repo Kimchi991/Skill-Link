@@ -820,8 +820,7 @@
                             OnClientClick="return prepareOrder();"
                             Style="display:none;" />
 
-                        <button type="button" class="btn btn-primary btn-full" onclick="if(prepareOrder()){simulatePayment();}">
-                            <i class="fas fa-lock"></i> Place Order &amp; Pay
+
                         </button>
                     </div>
 
@@ -884,8 +883,7 @@
                             </div>
                         </div>
 
-                        <div class="success-actions">
-                            <a href="Profile.aspx?tab=orders" class="btn btn-primary"><i class="fas fa-clipboard-list"></i> View My Orders</a>
+
                             <a href="Home.aspx"    class="btn btn-outline"><i class="fas fa-search"></i> Browse More</a>
                         </div>
                     </div>

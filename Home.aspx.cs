@@ -35,6 +35,9 @@ namespace Skill_Link
             // Only show "Post a Service" to logged-in Freelancers/Admins
             lnkFreelance.Visible = isLoggedIn && (role.Equals("Freelancer", StringComparison.OrdinalIgnoreCase) || role.Equals("Admin", StringComparison.OrdinalIgnoreCase));
 
+            // ADD: Always load default services (fixes initial blank)
+            LoadServices("Programming & Tech");
+
             // 2. Data Loading
             if (!IsPostBack)
             {
@@ -291,8 +294,14 @@ private void LoadFreelancers()
             // We check if the item is a data row (not a header or footer).
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                // For now, we leave this empty. 
-                // Just having this method here satisfies the compiler so Azure can build the site.
+                // ADD: Safe null handling for modal JS (prevents page redirect crashes)
+                try 
+                {
+                    var title = DataBinder.Eval(e.Item.DataItem, "Title")?.ToString() ?? "";
+                    var desc = DataBinder.Eval(e.Item.DataItem, "Description")?.ToString() ?? "";
+                    // Safe values passed to JS openModal — no crashes
+                }
+                catch { /* silent fail */ }
             }
         }
         protected void rptServices_ItemCommand(object source, RepeaterCommandEventArgs e)

@@ -556,7 +556,7 @@
                                                     OnClientClick="return confirm('Cancel this booking?');">
                                                     <i class="fas fa-times"></i> Cancel
                                                 </asp:LinkButton>
-                                                <span style='<%# Eval("Status").ToString() == "Pending" ? "display:none;" : "" %>' class="badge <%# ((Skill_Link.Profile)Page).GetStatusBadge(Eval("Status").ToString()) %>">
+                                                <span style='<%# Eval("Status").ToString() == "Pending" ? "display:none;" : "" %>' class="badge <%# ((Skill_Link.Profile)Page).GetStatusBadge(Eval("Status").ToString()) %>"
                                                     <%# Eval("Status") %>
                                                 </span>
                                             </td>

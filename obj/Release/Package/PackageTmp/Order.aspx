@@ -592,10 +592,10 @@
                     <div class="card-title" style="font-size:14px;margin-bottom:14px;"><i class="fas fa-box"></i> Choose a Package</div>
                     <div class="pkg-selector">
                         <div class="pkg-option selected" onclick="selectPkg(this, 0)" data-pkg="0">
-                            <div class="pkg-opt-name">Basic</div>
+                            <div class="pkg-opt-name">Quick Delivery</div>
                             <div class="pkg-opt-price" id="pkgPrice0">₱<asp:Literal ID="litPriceBasic" runat="server" /></div>
                             <div class="pkg-opt-meta">
-                                <span><i class="fas fa-clock"></i> 5 days</span>
+                                <span><i class="fas fa-clock"></i> 1–3 days</span>
                                 <span><i class="fas fa-redo"></i> 2 revisions</span>
                             </div>
                         </div>
@@ -603,15 +603,15 @@
                             <div class="pkg-opt-name">Standard</div>
                             <div class="pkg-opt-price" id="pkgPrice1">₱<asp:Literal ID="litPriceStandard" runat="server" /></div>
                             <div class="pkg-opt-meta">
-                                <span><i class="fas fa-clock"></i> 3 days</span>
+                                <span><i class="fas fa-clock"></i> 4–7 days</span>
                                 <span><i class="fas fa-redo"></i> 5 revisions</span>
                             </div>
                         </div>
                         <div class="pkg-option" onclick="selectPkg(this, 2)" data-pkg="2">
-                            <div class="pkg-opt-name">Premium</div>
+                            <div class="pkg-opt-name">Extended</div>
                             <div class="pkg-opt-price" id="pkgPrice2">₱<asp:Literal ID="litPricePremium" runat="server" /></div>
                             <div class="pkg-opt-meta">
-                                <span><i class="fas fa-clock"></i> 1 day</span>
+                                <span><i class="fas fa-clock"></i> 8–14 days</span>
                                 <span><i class="fas fa-infinity"></i> Unlimited</span>
                             </div>
                         </div>
@@ -820,8 +820,7 @@
                             OnClientClick="return prepareOrder();"
                             Style="display:none;" />
 
-                        <button type="button" class="btn btn-primary btn-full" onclick="if(prepareOrder()){simulatePayment();}">
-                            <i class="fas fa-lock"></i> Place Order &amp; Pay
+
                         </button>
                     </div>
 
@@ -884,8 +883,7 @@
                             </div>
                         </div>
 
-                        <div class="success-actions">
-                            <a href="Profile.aspx?tab=orders" class="btn btn-primary"><i class="fas fa-clipboard-list"></i> View My Orders</a>
+
                             <a href="Home.aspx"    class="btn btn-outline"><i class="fas fa-search"></i> Browse More</a>
                         </div>
                     </div>
@@ -938,10 +936,9 @@
 
     </div>
     
-                </div><!-- /order-main -->
-            </div><!-- /order-sidebar -->
+        </div><!-- /order-sidebar -->
         </div><!-- /page-wrap -->
-    </div><!-- /order-modal-body -->
+        </div><!-- /order-modal-body -->
 </div><!-- /order-modal -->
 </div><!-- /order-modal-backdrop -->
 
@@ -991,9 +988,9 @@
         currentStep: 1,
         selectedPkg: 0,
         basePrice: 0,  // set after DOM ready
-        pkgNames: ['Basic', 'Standard', 'Premium'],
-        pkgDays: ['5 days', '3 days', '1 day'],
-        pkgMult: [1, 2, 3],
+        pkgNames: ['Quick Delivery', 'Standard', 'Extended'],
+        pkgDays: ['1–3 days', '4–7 days', '8–14 days'],
+        pkgMult: [1, 1.5, 2],
         payMethod: 'gcash'
     };
 
@@ -1058,7 +1055,7 @@
             var si = document.getElementById('stepItem' + i);
             si.classList.remove('active', 'done');
             if (i < n) si.classList.add('done');
-            
+
             // Sync modal stepper
             var ms = document.getElementById('omsStep' + i);
             if (ms) {
