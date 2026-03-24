@@ -469,19 +469,7 @@
 
         .sc-body { padding: 16px; }
         .sc-category { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent-dark); margin-bottom: 6px; }
-.sc-title { 
-    font-size: 14px; 
-    font-weight: 600; 
-    color: var(--text); 
-    line-height: 1.45; 
-    margin-bottom: 8px; 
-    display: -webkit-box; 
-    -webkit-line-clamp: 2; 
-    -webkit-box-orient: vertical; 
-    overflow: hidden;
-    overflow-wrap: break-word;
-    line-clamp: 2;
-}
+        .sc-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .sc-seller { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
         .sc-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #2563eb); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
         .sc-seller-name { font-size: 12px; color: var(--muted); font-weight: 500; }
@@ -502,7 +490,6 @@
             opacity: 0.9;
             display: block;
         }
-
         .sc-cta {
             font-size: 12px;
             font-weight: 600;
@@ -514,11 +501,8 @@
             cursor: pointer;
             text-decoration: none;
             transition: background 0.14s, color 0.14s;
-            line-height: 1.2;
         }
         .sc-cta:hover { background: var(--accent); color: #fff; }
-        .sc-cta.buy-btn-neon { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 8px 16px; font-weight: 700; box-shadow: 0 4px 12px rgba(34,197,94,0.3); margin-left: 8px; }
-        .sc-cta.buy-btn-neon:hover { background: linear-gradient(135deg, #16a34a, #15803d); transform: translateY(-1px); }
 
         /* empty state */
         .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--muted); }
@@ -911,7 +895,7 @@
 <div class="page-body">
 
     <!-- SERVICES VIEW -->
-style="display:block;">
+    <div id="viewServices" runat="server" style="display:none;">
         <div class="section-head">
             <div>
                 <h2><asp:Literal ID="litCatTitle" runat="server" /></h2>
@@ -937,12 +921,31 @@ style="display:block;">
                                 <span class="sc-seller-name"><%# ShortenName(Eval("Name").ToString()) %></span>
                             </div>
 
-
                             <div class="sc-footer">
                                 <div class="sc-price">
                                     <%# GetDisplayPrice(Eval("Price")) %>
                                 </div>
-                                <button class="sc-cta" onclick="openModalSafe('<%# Server.HtmlEncode(Eval("Title") ?? "Untitled") %>', '<%# Server.HtmlEncode(Eval("Description") ?? "") %>', '<%# Eval("Category") ?? "Other" %>', '<%# ShortenName(Eval("Name") ?? "Anon") %>', '<%# GetInitial(Eval("Name") ?? "?") %>', '<%# (Eval("Price") ?? 500).ToString() %>');">View Details</button>
+
+onclick="event.stopPropagation(); openModal(
+                                    '<%# Server.HtmlEncode(Eval("Title")?.ToString() ?? "Untitled") %>',
+                                    '<%# Server.HtmlEncode(Eval("Description")?.ToString() ?? "") %>',
+                                    '<%# Eval("Category")?.ToString() ?? "Other" %>',
+                                    '<%# ShortenName(Eval("Name")?.ToString() ?? "Anonymous") %>',
+                                    '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
+                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 500) %>'
+                                ); event.preventDefault();" data-title="<%# Eval("Title") %>" data-desc="<%# Eval("Description") %>">
+                                    '<%# Eval("Category")?.ToString() ?? "Other" %>',
+                                    '<%# ShortenName(Eval("Name")?.ToString() ?? "Anonymous") %>',
+                                    '<%# GetInitial(Eval("Name")?.ToString() ?? "?") %>',
+                                    '<%# string.Format("{0:N0}", Eval("Price") ?? 500) %>'
+                                );">View</button>
+                                <asp:LinkButton ID="btnBuyNow" runat="server" 
+                                    CommandName="BuyService" 
+                                    CommandArgument='<%# Eval("Title") + "|" + Eval("Price") + "|" + Eval("Name") %>' 
+                                    CssClass="buy-btn-neon" 
+                                    style="margin-left: 10px; text-decoration: none;">
+                                    Buy Now
+                                </asp:LinkButton>
                             </div>
                         </div>
                      </div> </ItemTemplate>
@@ -1001,7 +1004,7 @@ style="display:block;">
 
                             <%-- Book Button --%>
                             <button type="button" class="fl-book-btn"
-                                onclick="bookFreelancer('<%# Server.HtmlEncode(Eval("Email").ToString()) %>','<%# Server.HtmlEncode(Eval("Username").ToString()) %>');
+                                onclick="bookFreelancer('<%# Server.HtmlEncode(Eval("Email").ToString()) %>','<%# Server.HtmlEncode(Eval("Username").ToString()) %>')">
                                 <i class="fas fa-calendar-plus"></i> Book this Freelancer
                             </button>
                         </div>
@@ -1227,12 +1230,8 @@ style="display:block;">
         'Business': 'fas fa-briefcase'
     };
 
-function openModalSafe(title, description, category, sellerName, sellerInitial, price) {
-        var p = parseInt(price.replace(/,/g, ''), 10) || 500;
-        openModal(title, description, category, sellerName, sellerInitial, p);
-    }
-    function openModal(title, description, category, sellerName, sellerInitial, price) {
-currentPrice = parseInt((price || 0).toString().replace(/,/g, ''), 10) || 0;
+function openModal(title, description, category, sellerName, sellerInitial, price) {
+        currentPrice = parseInt(price.replace(/,/g, ''), 10) || 0;
         currentPkg = 0;
         currentTitle = title;
         currentSeller = sellerName;
@@ -1252,8 +1251,8 @@ currentPrice = parseInt((price || 0).toString().replace(/,/g, ''), 10) || 0;
 
         // Prices (basic = listed, standard = 2x, premium = 3x)
         var basicP = currentPrice;
-        var standardP = Math.round(currentPrice * 1.5);
-        var premiumP = Math.round(currentPrice * 2);
+        var standardP = Math.round(currentPrice * 2);
+        var premiumP = Math.round(currentPrice * 3);
         document.getElementById('modalPriceBasic').textContent = '₱' + basicP.toLocaleString();
         document.getElementById('modalPriceStandard').textContent = '₱' + standardP.toLocaleString();
         document.getElementById('modalPricePremium').textContent = '₱' + premiumP.toLocaleString();
@@ -1342,7 +1341,7 @@ currentPrice = parseInt((price || 0).toString().replace(/,/g, ''), 10) || 0;
         window.location.href = 'Booking.aspx?' + params.toString();
     }
 
-function openModalSafe(title,desc,cat,seller,initial,price){title=title.replace(/'/g, "\\\\'");openModal(title,desc,cat,seller,initial,price);}&#10;function switchMainView(view) {
+    function switchMainView(view) {
         var servicesView = document.getElementById('viewServices');
         var freelancersView = document.getElementById('viewFreelancers');
         var catNav = document.getElementById('catNavBar');

@@ -178,20 +178,24 @@
         }
 
         /* package selector */
-        .pkg-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .pkg-option {
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 12px;
-            cursor: pointer;
-            transition: border-color 0.15s, background 0.15s;
-            text-align: center;
-        }
-        .pkg-option:hover { border-color: rgba(72,229,194,0.5); background: rgba(72,229,194,0.03); }
-        .pkg-option.selected { border-color: var(--accent); background: rgba(72,229,194,0.06); }
-        .pkg-option .pkg-opt-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-        .pkg-option .pkg-opt-price { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--accent-dark); margin-bottom: 6px; }
-        .pkg-option .pkg-opt-meta { font-size: 11px; color: var(--muted); display: flex; flex-direction: column; gap: 3px; }
+
+        .pkg-table-wrap { background: rgba(255,255,255,0.6); backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid rgba(226,232,240,0.5); overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+        .pkg-table th { padding: 12px 8px; font-size: 13px; font-weight: 700; color: var(--text); border-bottom: 2px solid var(--border); }
+        .pkg-table th:nth-child(2) { text-align: left; }
+        .pkg-table th:nth-child(3) { text-align: center; }
+        .pkg-table th:nth-child(4) { text-align: right; }
+        .pkg-table th.selected-pkg { color: #22c55e; border-bottom-color: #22c55e !important; background: rgba(34,197,94,0.08); }
+        .pkg-table td { padding: 12px 8px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
+        .pkg-table tr:last-child td { border-bottom: none; }
+        .pkg-table td:first-child { font-weight: 600; color: var(--muted); font-size: 12px; }
+        .pkg-table .check { color: #22c55e; font-size: 14px; }
+        .pkg-table .no-check { color: #9ca3af; }
+        .pkg-table tr:last-child td { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; cursor: pointer; transition: color 0.15s; }
+        .pkg-table tr:last-child td:nth-child(2) { text-align: left; font-size: 16px; }
+        .pkg-table tr:last-child td:nth-child(3) { text-align: center; font-size: 16px; }
+        .pkg-table tr:last-child td:nth-child(4) { text-align: right; font-size: 20px; color: #22c55e; text-shadow: 0 0 8px rgba(34,197,94,0.3); }
+        .pkg-table tr:last-child td:hover { color: #16a34a !important; }
+
 
         /* ── FORM ELEMENTS ── */
         .form-group { margin-bottom: 18px; }
@@ -588,34 +592,60 @@
                         </div>
                     </div>
 
-                    <!-- Package selection -->
-                    <div class="card-title" style="font-size:14px;margin-bottom:14px;"><i class="fas fa-box"></i> Choose a Package</div>
-                    <div class="pkg-selector">
-                        <div class="pkg-option selected" onclick="selectPkg(this, 0)" data-pkg="0">
-                            <div class="pkg-opt-name">Quick Delivery</div>
-                            <div class="pkg-opt-price" id="pkgPrice0">₱<asp:Literal ID="litPriceBasic" runat="server" /></div>
-                            <div class="pkg-opt-meta">
-                                <span><i class="fas fa-clock"></i> 1–3 days</span>
-                                <span><i class="fas fa-redo"></i> 2 revisions</span>
-                            </div>
-                        </div>
-                        <div class="pkg-option" onclick="selectPkg(this, 1)" data-pkg="1">
-                            <div class="pkg-opt-name">Standard</div>
-                            <div class="pkg-opt-price" id="pkgPrice1">₱<asp:Literal ID="litPriceStandard" runat="server" /></div>
-                            <div class="pkg-opt-meta">
-                                <span><i class="fas fa-clock"></i> 4–7 days</span>
-                                <span><i class="fas fa-redo"></i> 5 revisions</span>
-                            </div>
-                        </div>
-                        <div class="pkg-option" onclick="selectPkg(this, 2)" data-pkg="2">
-                            <div class="pkg-opt-name">Extended</div>
-                            <div class="pkg-opt-price" id="pkgPrice2">₱<asp:Literal ID="litPricePremium" runat="server" /></div>
-                            <div class="pkg-opt-meta">
-                                <span><i class="fas fa-clock"></i> 8–14 days</span>
-                                <span><i class="fas fa-infinity"></i> Unlimited</span>
-                            </div>
-                        </div>
+
+                    <!-- Fiverr-style Package Compare Table -->
+                    <div class="card-title" style="font-size:14px;margin-bottom:14px;"><i class="fas fa-box"></i> Choose Your Package</div>
+                    <div class="pkg-table-wrap" style="overflow-x:auto;">
+                        <table class="pkg-table" style="width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="pkg-th" style="padding:12px 8px;text-align:left;font-size:13px;font-weight:700;color:var(--text);border-bottom:2px solid var(--border);">Quick</th>
+                                    <th class="pkg-th" style="padding:12px 8px;text-align:center;font-size:13px;font-weight:700;color:var(--text);border-bottom:2px solid var(--border);">Standard</th>
+                                    <th class="pkg-th selected-pkg" style="padding:12px 8px;text-align:right;font-size:13px;font-weight:700;color:var(--accent-dark);border-bottom:2px solid var(--accent);background:rgba(72,229,194,0.08);">Extended</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:14px 12px 10px;font-weight:600;color:var(--muted);font-size:12px;">Delivery Time</td>
+                                    <td style="padding:14px 12px;text-align:left;font-size:14px;">1-3 days</td>
+                                    <td style="padding:14px 12px;text-align:center;font-size:14px;">4-7 days</td>
+                                    <td style="padding:14px 12px;text-align:right;font-size:14px;color:var(--accent);">8-14 days</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:10px 12px 10px;font-weight:600;color:var(--muted);font-size:12px;">Revisions</td>
+                                    <td style="padding:10px 12px;text-align:left;font-size:14px;">2</td>
+                                    <td style="padding:10px 12px;text-align:center;font-size:14px;">5</td>
+                                    <td style="padding:10px 12px;text-align:right;font-size:14px;color:var(--accent);">Unlimited</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:10px 12px 10px;font-weight:600;color:var(--muted);font-size:12px;">Source Files</td>
+                                    <td style="padding:10px 12px;text-align:center;"><i class="fas fa-check-circle" style="color:#22c55e;"></i></td>
+                                    <td style="padding:10px 12px;text-align:center;"><i class="fas fa-check-circle" style="color:#22c55e;"></i></td>
+                                    <td style="padding:10px 12px;text-align:center;"><i class="fas fa-check-circle" style="color:#22c55e;"></i></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:10px 12px 10px;font-weight:600;color:var(--muted);font-size:12px;">Priority Support</td>
+                                    <td style="padding:10px 12px;text-align:center;">✗</td>
+                                    <td style="padding:10px 12px;text-align:center;"><i class="fas fa-check-circle" style="color:#22c55e;"></i></td>
+                                    <td style="padding:10px 12px;text-align:center;"><i class="fas fa-check-circle" style="color:#22c55e;"></i></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:10px 12px 10px;font-weight:600;color:var(--muted);font-size:12px;">Post-Delivery Support</td>
+                                    <td style="padding:10px 12px;text-align:center;">✗</td>
+                                    <td style="padding:10px 12px;text-align:center;">✗</td>
+                                    <td style="padding:10px 12px;text-align:center;"><i class="fas fa-check-circle" style="color:#22c55e;"></i></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:12px 12px 10px;font-weight:600;color:var(--muted);font-size:12px;">Price</td>
+                                    <td onclick="selectTablePkg(0,this.parentNode.parentNode)" style="padding:12px 12px;text-align:left;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text);cursor:pointer;">₱<asp:Literal ID="litPriceBasic" runat="server" /></td>
+                                    <td onclick="selectTablePkg(1,this.parentNode.parentNode)" style="padding:12px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text);cursor:pointer;">₱<asp:Literal ID="litPriceStandard" runat="server" /></td>
+                                    <td onclick="selectTablePkg(2,this.parentNode.parentNode)" style="padding:12px 12px;text-align:right;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#22c55e;text-shadow:0 0 12px rgba(34,197,94,0.4);cursor:pointer;">₱<asp:Literal ID="litPricePremium" runat="server" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
 
                     <div class="btn-nav">
                         <button type="button" class="btn btn-primary btn-full" onclick="goStep(2)">
@@ -1085,13 +1115,20 @@
     /* ═══════════════════════════════════════════
        PACKAGE SELECTION
     ═══════════════════════════════════════════ */
-    function selectPkg(el, idx) {
-        document.querySelectorAll('.pkg-option').forEach(function (o) { o.classList.remove('selected'); });
-        el.classList.add('selected');
+function selectTablePkg(idx, row) {
+        // Update table header select
+        row.querySelectorAll('th.pkg-th').forEach(function(th, i) {
+            th.classList.toggle('selected-pkg', i === idx);
+        });
+        // Update price cells select glow
+        row.querySelectorAll('td').forEach(function(td, i) {
+            if (i > 0) td.style.color = i === idx ? '#22c55e' : 'var(--text)';
+        });
         state.selectedPkg = idx;
         if (!state.basePrice) state.basePrice = getBasePrice();
         updatePrices();
     }
+    function selectPkg(el, idx) { selectTablePkg(idx, document.querySelector('.pkg-table')); }
 
     function updatePrices() {
         var base = Math.round(state.basePrice * state.pkgMult[state.selectedPkg]);

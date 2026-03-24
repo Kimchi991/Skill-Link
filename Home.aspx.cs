@@ -281,25 +281,32 @@ private void LoadFreelancers()
             pnlNoFreelancers.Visible = dt.Rows.Count == 0;
 
         }
-        public string ShortenName(string name)
+public string ShortenName(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) return "Anonymous";
             int at = name.IndexOf('@');
             if (at > 0) return name.Substring(0, at);
             return name.Length > 20 ? name.Substring(0, 20) + "…" : name;
         }
-        protected void rptServices_ItemDataBound(object sender, RepeaterItemEventArgs e)
+
+        public string GetDisplayPrice(object priceObj)
         {
-            // This code runs for every single service "item" inside your repeater.
-            // We check if the item is a data row (not a header or footer).
+            if (priceObj == null || priceObj == DBNull.Value || Convert.ToDecimal(priceObj) == 0)
+            {
+                return "Contact<br>for Quote";
+            }
+            decimal price = Convert.ToDecimal(priceObj);
+            return string.Format("₱{0:N0}", price) + "<small>starting at</small>";
+        }
+protected void rptServices_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            // Safe null handling for modal JS / ratings
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                // ADD: Safe null handling for modal JS (prevents page redirect crashes)
                 try 
                 {
                     var title = DataBinder.Eval(e.Item.DataItem, "Title")?.ToString() ?? "";
                     var desc = DataBinder.Eval(e.Item.DataItem, "Description")?.ToString() ?? "";
-                    // Safe values passed to JS openModal — no crashes
                 }
                 catch { /* silent fail */ }
             }
