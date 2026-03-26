@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 
 namespace Skill_Link
 {
-    public partial class Home : Page
+    public partial class Home : BasePage  // Inherit from BasePage for DB helpers
     {
-        public string ActiveCategory { get; private set; } = "Programming";
+        public string activeCategory { get; private set; } = "Programming";  // Lowercase literal property
 
-        private static readonly string[,] CatMeta = new string[,]
+        // Category metadata array - used by updateCategoryMeta
+        private static readonly string[,] categoryMetadata = new string[,]
         {
             { "Programming & Tech",        "Programming & Tech",         "Custom software, web apps, and technical solutions" },
             { "Graphics & Design",         "Graphics & Design",          "Creative designs to make your brand unforgettable" },
@@ -22,303 +23,292 @@ namespace Skill_Link
             { "Business",                  "Business",                   "Consulting, planning, and professional services" },
         };
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)  // loadPage hooks via override if needed
         {
-            // 1. Handle UI Visibility (Login/Profile)
-            bool isLoggedIn = Session["UserEmail"] != null;
-            hdnIsLoggedIn.Value = isLoggedIn ? "1" : "0";
-            string role = Session["UserRole"]?.ToString() ?? "";
+            // Handle login state visibility
+            bool hasValidSession = Session["UserEmail"] != null;
+            hdnIsLoggedIn.Value = hasValidSession ? "1" : "0";
+            string userRole = Session["UserRole"]?.ToString() ?? "";
 
-            lnkLogin.Visible = !isLoggedIn;
-            lnkProfile.Visible = isLoggedIn;
+            lnkLogin.Visible = !hasValidSession;
+            lnkProfile.Visible = hasValidSession;
+            lnkFreelance.Visible = hasValidSession && (userRole.Equals("Freelancer", StringComparison.OrdinalIgnoreCase) || userRole.Equals("Admin", StringComparison.OrdinalIgnoreCase));
 
-            // Only show "Post a Service" to logged-in Freelancers/Admins
-            lnkFreelance.Visible = isLoggedIn && (role.Equals("Freelancer", StringComparison.OrdinalIgnoreCase) || role.Equals("Admin", StringComparison.OrdinalIgnoreCase));
-
-            // ADD: Always load default services (fixes initial blank)
-            LoadServices("Programming & Tech");
-
-            // 2. Data Loading
             if (!IsPostBack)
             {
-                // Force the services view to be visible if it's the default landing
-                // Note: Make sure viewServices has runat="server" in the .aspx file
-                viewServices.Style["display"] = "block";
-
-                LoadServices("Programming & Tech");
-                SetActiveMeta("Programming & Tech");
-                LoadFreelancers();
+                // Single load for default view - no more duplication!
+                string defaultCategory = "Programming & Tech";
+                loadServicesByCategory(defaultCategory);  // Literal: loads services for specific category
+                updateCategoryMeta(defaultCategory);      // Literal: updates UI meta for category
+                loadFreelancers();                       // Literal: loads top freelancers
+                viewServices.Style["display"] = "block"; // Match original comment reference
             }
             else
             {
-                // Re-binding on PostBack is usually only needed if ViewState is disabled
-                LoadFreelancers();
+                // Postback rebind only freelancers (services persist via ViewState)
+                loadFreelancers();
             }
         }
 
-        protected void lnkTech_Click(object sender, EventArgs e) { LoadServices("Programming & Tech"); SetActiveMeta("Programming & Tech"); }
-        protected void lnkGraphics_Click(object sender, EventArgs e) { LoadServices("Graphics & Design"); SetActiveMeta("Graphics & Design"); }
-        protected void lnkVideo_Click(object sender, EventArgs e) { LoadServices("Video & Animation"); SetActiveMeta("Video & Animation"); }
-        protected void lnkMusic_Click(object sender, EventArgs e) { LoadServices("Music & Audio"); SetActiveMeta("Music & Audio"); }
-        protected void lnkMarketing_Click(object sender, EventArgs e) { LoadServices("Digital Marketing"); SetActiveMeta("Digital Marketing"); }
-        protected void lnkWriting_Click(object sender, EventArgs e) { LoadServices("Writing & Translation"); SetActiveMeta("Writing & Translation"); }
-        protected void lnkBusiness_Click(object sender, EventArgs e) { LoadServices("Business"); SetActiveMeta("Business"); }
-
-        protected void btnSearch_Click(object sender, EventArgs e)
+        // Unified category handler - DRY for all 7 buttons
+        private void handleCategoryClick(string category)  // Merge all lnk*_Click
         {
-            string q = txtSearch.Text.Trim();
-            if (!string.IsNullOrEmpty(q))
-                LoadServicesSearch(q);
+            loadServicesByCategory(category);
+            updateCategoryMeta(category);
         }
 
-        private void LoadServices(string category)
-        {
-            string connStr = ConfigurationManager.ConnectionStrings["SkillLinkDB"].ConnectionString;
-            DataTable dt = new DataTable();
+        // Direct event handlers call unified handler
+        protected void lnkTech_Click(object sender, EventArgs e) => handleCategoryClick("Programming & Tech");
+        protected void lnkGraphics_Click(object sender, EventArgs e) => handleCategoryClick("Graphics & Design");
+        protected void lnkVideo_Click(object sender, EventArgs e) => handleCategoryClick("Video & Animation");
+        protected void lnkMusic_Click(object sender, EventArgs e) => handleCategoryClick("Music & Audio");
+        protected void lnkMarketing_Click(object sender, EventArgs e) => handleCategoryClick("Digital Marketing");
+        protected void lnkWriting_Click(object sender, EventArgs e) => handleCategoryClick("Writing & Translation");
+        protected void lnkBusiness_Click(object sender, EventArgs e) => handleCategoryClick("Business");
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+        protected void handleSearch(object sender, EventArgs e)  // Renamed from btnSearch_Click
+        {
+            string searchKeyword = txtSearch.Text.Trim();
+            if (!string.IsNullOrEmpty(searchKeyword))
+                loadServicesBySearch(searchKeyword);  // Literal: searches services
+        }
+
+        // Loads services filtered by exact category match
+        // Phase 4: Enhanced with price min/max, rating filters
+        private void loadServicesByCategory(string category, decimal? minPrice = null, decimal? maxPrice = null, int? minRating = null)
+        {
+            try
             {
-                string sql = @"SELECT TOP 20 Title, Description, Category, Name, Price
-                               FROM Services1
-                               WHERE Category = @Cat
-                               ORDER BY Price ASC";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Cat", category);
-                conn.Open();
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    da.Fill(dt);
+                string sql = @"SELECT TOP 20 s.Title, s.Description, s.Category, s.Name, s.Price,
+                                     ISNULL(AVG(CAST(COALESCE(sr.Rating, 0) AS FLOAT)), 0) AS AvgRating
+                               FROM Services1 s
+                               LEFT JOIN ServiceRatings sr ON sr.ServiceID = s.ServiceID
+                               WHERE s.Category = @p0";
+
+                var parameters = new List<object> { category };
+                if (minPrice.HasValue) { sql += " AND s.Price >= @p" + parameters.Count; parameters.Add(minPrice.Value); }
+                if (maxPrice.HasValue) { sql += " AND s.Price <= @p" + parameters.Count; parameters.Add(maxPrice.Value); }
+                if (minRating.HasValue) { sql += " AND ISNULL(AVG(CAST(COALESCE(sr.Rating, 0) AS FLOAT)), 0) >= @p" + parameters.Count; parameters.Add(minRating.Value); }
+
+                sql += " GROUP BY s.ServiceID, s.Title, s.Description, s.Category, s.Name, s.Price ORDER BY s.Price ASC";
+
+                DataTable servicesData = queryDataTable(sql, parameters.ToArray());
+
+                rptServices.DataSource = servicesData;
+                rptServices.DataBind();
+                pnlEmpty.Visible = servicesData.Rows.Count == 0;
             }
-
-            rptServices.DataSource = dt;
-            rptServices.DataBind();
-            pnlEmpty.Visible = (dt.Rows.Count == 0);
-        }
-
-        private void LoadServicesSearch(string keyword)
-        {
-            string connStr = ConfigurationManager.ConnectionStrings["SkillLinkDB"].ConnectionString;
-            DataTable dt = new DataTable();
-
-            using (SqlConnection conn = new SqlConnection(connStr))
+            catch (Exception dbError)
             {
-                string sql = @"SELECT TOP 30 Title, Description, Category, Name, Price
-                               FROM Services1
-                               WHERE Title       LIKE @kw
-                                  OR Description LIKE @kw
-                                  OR Category    LIKE @kw
-                               ORDER BY Price ASC";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@kw", "%" + keyword + "%");
-                conn.Open();
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    da.Fill(dt);
+                logError(dbError);
+                showUserError(lblServicesError, "Services temporarily unavailable. Please refresh.");
             }
-
-            litCatTitle.Text = "Search results for \"" + keyword + "\"";
-            litCatDesc.Text = dt.Rows.Count + " service(s) found";
-            rptServices.DataSource = dt;
-            rptServices.DataBind();
-            pnlEmpty.Visible = (dt.Rows.Count == 0);
-            ActiveCategory = keyword;
         }
 
-        private void SetActiveMeta(string category)
+        // Loads services matching search keyword
+        private void loadServicesBySearch(string keyword)
         {
-            ActiveCategory = category;
-            for (int i = 0; i < CatMeta.GetLength(0); i++)
+            try
             {
-                if (CatMeta[i, 0] == category)
+                DataTable searchResults = queryDataTable(
+                    @"SELECT TOP 30 Title, Description, Category, Name, Price
+                      FROM Services1
+                      WHERE Title LIKE @p0 OR Description LIKE @p0 OR Category LIKE @p0
+                      ORDER BY Price ASC", "%" + keyword + "%");
+
+                litCatTitle.Text = "Search results for \"" + keyword + "\"";
+                litCatDesc.Text = searchResults.Rows.Count + " service(s) found";
+                rptServices.DataSource = searchResults;
+                rptServices.DataBind();
+                pnlEmpty.Visible = searchResults.Rows.Count == 0;
+                activeCategory = keyword;  // Now used consistently
+            }
+            catch (Exception searchError)
+            {
+                logError(searchError);
+                showUserError(lblServicesError, "Search failed. Try different keywords.");
+            }
+        }
+
+        // Updates litCatTitle/litCatDesc from category metadata array
+        private void updateCategoryMeta(string category)
+        {
+            activeCategory = category;
+            for (int row = 0; row < categoryMetadata.GetLength(0); row++)
+            {
+                if (categoryMetadata[row, 0] == category)
                 {
-                    litCatTitle.Text = CatMeta[i, 1];
-                    litCatDesc.Text = CatMeta[i, 2];
+                    litCatTitle.Text = categoryMetadata[row, 1];
+                    litCatDesc.Text = categoryMetadata[row, 2];
                     return;
                 }
             }
+            // Fallback for unknown category
             litCatTitle.Text = category;
             litCatDesc.Text = "";
         }
 
-// Modal onclick now safe in ItemDataBound - removed inline JS onclick
-
-        public string GetGradient(string category)
+        // Loads freelancers with ratings (non-silent now)
+        private void loadFreelancers()
         {
-            switch (category)
-            {
-                case "Programming & Tech": return "grad-tech";
-                case "Graphics & Design": return "grad-design";
-                case "Video & Animation": return "grad-video";
-                case "Music & Audio": return "grad-audio";
-                case "Writing & Translation": return "grad-writing";
-                case "Digital Marketing": return "grad-marketing";
-                case "Business": return "grad-business";
-                default: return "grad-other";
-            }
-        }
-
-        public string GetIcon(string category)
-        {
-            switch (category)
-            {
-                case "Programming & Tech": return "fas fa-code";
-                case "Graphics & Design": return "fas fa-paint-brush";
-                case "Video & Animation": return "fas fa-video";
-                case "Music & Audio": return "fas fa-music";
-                case "Writing & Translation": return "fas fa-pen-nib";
-                case "Digital Marketing": return "fas fa-chart-line";
-                case "Business": return "fas fa-briefcase";
-                default: return "fas fa-star";
-            }
-        }
-
-        public string GetInitial(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name)) return "?";
-            return name.Substring(0, 1).ToUpper();
-        }
-        public string RenderSkillTags(object skillsObj)
-        {
-            if (skillsObj == null || skillsObj == DBNull.Value)
-                return "<span style='font-size:12px;color:#64748b;font-style:italic;'>No skills listed yet</span>";
-
-            string skills = skillsObj.ToString().Trim();
-            if (string.IsNullOrEmpty(skills))
-                return "<span style='font-size:12px;color:#64748b;font-style:italic;'>No skills listed yet</span>";
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            foreach (string skill in skills.Split(','))
-            {
-                string s = skill.Trim();
-                if (!string.IsNullOrEmpty(s))
-                    sb.AppendFormat("<span class='fl-skill-tag'>{0}</span>",
-                        System.Web.HttpUtility.HtmlEncode(s));
-            }
-            return sb.ToString();
-        }
-
-        public string RenderCompletedWorks(string freelancerEmail)
-        {
-            if (string.IsNullOrEmpty(freelancerEmail))
-                return "<div class='fl-no-works'>No completed works yet</div>";
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             try
             {
-                string connStr = System.Configuration.ConfigurationManager
-                    .ConnectionStrings["SkillLinkDB"].ConnectionString;
-
-                using (System.Data.SqlClient.SqlConnection conn =
-                    new System.Data.SqlClient.SqlConnection(connStr))
-                {
-                    System.Data.SqlClient.SqlCommand cmd =
-                        new System.Data.SqlClient.SqlCommand(
-                        @"SELECT TOP 3 ServiceTitle, OrderDate
-                  FROM   Orders
-                  WHERE  SellerEmail = @Email
-                  AND    Status = 'Completed'
-                  ORDER  BY OrderDate DESC", conn);
-                    cmd.Parameters.AddWithValue("@Email", freelancerEmail);
-                    conn.Open();
-
-                    using (System.Data.SqlClient.SqlDataReader r = cmd.ExecuteReader())
-                    {
-                        bool hasRows = false;
-                        while (r.Read())
-                        {
-                            hasRows = true;
-                            string title = System.Web.HttpUtility.HtmlEncode(
-                                r["ServiceTitle"].ToString());
-                            string date = r["OrderDate"] != DBNull.Value
-                                ? Convert.ToDateTime(r["OrderDate"]).ToString("MMM yyyy")
-                                : "";
-                            sb.AppendFormat(
-                                "<div class='fl-work-item'>" +
-                                "<span>{0}</span>" +
-                                "<span class='fl-work-date'>{1}</span>" +
-                                "</div>", title, date);
-                        }
-                        if (!hasRows)
-                            sb.Append("<div class='fl-no-works'>No completed works yet</div>");
-                    }
-                }
-            }
-            catch
-            {
-                sb.Append("<div class='fl-no-works'>No completed works yet</div>");
-            }
-            return sb.ToString();
-        }
-private void LoadFreelancers()
-        {
-            string connStr = System.Configuration.ConfigurationManager
-                .ConnectionStrings["SkillLinkDB"].ConnectionString;
-
-            DataTable dt = new DataTable();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connStr))
-                {
-                    string sql = @"SELECT a.Username, a.Email, a.Skills,
+                DataTable freelancersData = queryDataTable(
+                    @"SELECT a.Username, a.Email, a.Skills,
                      ISNULL(AVG(CAST(COALESCE(sr.Rating, 0) AS FLOAT)), 0) AS AvgRating,
                      ISNULL(COUNT(sr.RatingID), 0) AS ReviewCount
               FROM Account a
               LEFT JOIN ServiceRatings sr ON sr.SellerEmail = a.Email
               WHERE a.Role = 'Freelancer'
               GROUP BY a.Username, a.Email, a.Skills
-              ORDER BY AvgRating DESC, ReviewCount DESC";
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    conn.Open();
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(dt);
+              ORDER BY AvgRating DESC, ReviewCount DESC");
+
+                rptFreelancers.DataSource = freelancersData;
+                rptFreelancers.DataBind();
+                pnlNoFreelancers.Visible = freelancersData.Rows.Count == 0;
+            }
+            catch (Exception freelancersError)
+            {
+                logError(freelancersError);
+                showUserError(lblFreelancersError, "Freelancers list unavailable. Please refresh.");
+            }
+        }
+
+        // UI Rendering helpers (Literal names)
+        public string getGradientClass(string category)
+        {
+            // Literal switch - could extract to data-driven but switch is fine for 7 items
+            return category switch
+            {
+                "Programming & Tech" => "grad-tech",
+                "Graphics & Design" => "grad-design",
+                "Video & Animation" => "grad-video",
+                "Music & Audio" => "grad-audio",
+                "Writing & Translation" => "grad-writing",
+                "Digital Marketing" => "grad-marketing",
+                "Business" => "grad-business",
+                _ => "grad-other"
+            };
+        }
+
+        public string getIconClass(string category)
+        {
+            return category switch
+            {
+                "Programming & Tech" => "fas fa-code",
+                "Graphics & Design" => "fas fa-paint-brush",
+                "Video & Animation" => "fas fa-video",
+                "Music & Audio" => "fas fa-music",
+                "Writing & Translation" => "fas fa-pen-nib",
+                "Digital Marketing" => "fas fa-chart-line",
+                "Business" => "fas fa-briefcase",
+                _ => "fas fa-star"
+            };
+        }
+
+        public string getInitials(string name)
+        {
+            return string.IsNullOrWhiteSpace(name) ? "?" : name.Substring(0, 1).ToUpper();
+        }
+
+        public string renderSkillTags(object skillsObject)
+        {
+            if (skillsObject == null || skillsObject == DBNull.Value || string.IsNullOrWhiteSpace(skillsObject.ToString()))
+                return "<span style='font-size:12px;color:#64748b;font-style:italic;'>No skills listed yet</span>";
+
+            string[] skillsArray = skillsObject.ToString().Trim().Split(',');
+            System.Text.StringBuilder tagsBuilder = new System.Text.StringBuilder();
+            foreach (string skill in skillsArray)
+            {
+                string trimmedSkill = skill.Trim();
+                if (!string.IsNullOrEmpty(trimmedSkill))
+                    tagsBuilder.AppendFormat("<span class='fl-skill-tag'>{0}</span>", System.Web.HttpUtility.HtmlEncode(trimmedSkill));
+            }
+            return tagsBuilder.ToString();
+        }
+
+        public string renderCompletedWorks(string freelancerEmail)
+        {
+            if (string.IsNullOrEmpty(freelancerEmail))
+                return "<div class='fl-no-works'>No completed works yet</div>";
+
+            System.Text.StringBuilder worksHtml = new System.Text.StringBuilder();
+            try
+            {
+                DataTable worksData = queryDataTable(
+                    @"SELECT TOP 3 ServiceTitle, OrderDate
+                      FROM Orders
+                      WHERE SellerEmail = @p0 AND Status = 'Completed'
+                      ORDER BY OrderDate DESC", freelancerEmail);
+
+                bool hasWork = false;
+                foreach (DataRow row in worksData.Rows)
+                {
+                    hasWork = true;
+                    string title = System.Web.HttpUtility.HtmlEncode(row["ServiceTitle"].ToString());
+                    string dateStr = row["OrderDate"] != DBNull.Value 
+                        ? Convert.ToDateTime(row["OrderDate"]).ToString("MMM yyyy") : "";
+                    worksHtml.AppendFormat("<div class='fl-work-item'><span>{0}</span><span class='fl-work-date'>{1}</span></div>", title, dateStr);
                 }
+                if (!hasWork)
+                    worksHtml.Append("<div class='fl-no-works'>No completed works yet</div>");
             }
-            catch (Exception)
+            catch (Exception worksError)
             {
-                // silent fail
+                logError(worksError);
+                worksHtml.Append("<div class='fl-no-works'>Error loading works</div>");
             }
-
-            rptFreelancers.DataSource = dt;
-            rptFreelancers.DataBind();
-            pnlNoFreelancers.Visible = dt.Rows.Count == 0;
-
-        }
-public string ShortenName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name)) return "Anonymous";
-            int at = name.IndexOf('@');
-            if (at > 0) return name.Substring(0, at);
-            return name.Length > 20 ? name.Substring(0, 20) + "…" : name;
+            return worksHtml.ToString();
         }
 
-        public string GetDisplayPrice(object priceObj)
+        public string shortenName(string fullName)
         {
-            if (priceObj == null || priceObj == DBNull.Value || Convert.ToDecimal(priceObj) == 0)
-            {
+            if (string.IsNullOrWhiteSpace(fullName)) return "Anonymous";
+            int atIndex = fullName.IndexOf('@');
+            if (atIndex > 0) return fullName.Substring(0, atIndex);
+            return fullName.Length > 20 ? fullName.Substring(0, 20) + "…" : fullName;
+        }
+
+        public string getDisplayPrice(object priceObject)
+        {
+            if (priceObject == null || priceObject == DBNull.Value || Convert.ToDecimal(priceObject) == 0)
                 return "Contact<br>for Quote";
-            }
-            decimal price = Convert.ToDecimal(priceObj);
-            return string.Format("₱{0:N0}", price) + "<small>starting at</small>";
+            decimal priceValue = Convert.ToDecimal(priceObject);
+            return string.Format("₱{0:N0}", priceValue) + "<small>starting at</small>";
         }
-protected void rptServices_ItemDataBound(object sender, RepeaterItemEventArgs e)
+
+        // Event handlers - fixed silent fails
+        protected void rptServices_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            // Safe null handling for modal JS / ratings
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                try 
+                try
                 {
-                    var title = DataBinder.Eval(e.Item.DataItem, "Title")?.ToString() ?? "";
-                    var desc = DataBinder.Eval(e.Item.DataItem, "Description")?.ToString() ?? "";
+                    // Safe data binding for modal/ratings
+                    var itemData = e.Item.DataItem;
+                    if (itemData != null)
+                    {
+                        DataBinder.Eval(itemData, "Title")?.ToString();
+                        DataBinder.Eval(itemData, "Description")?.ToString();
+                    }
                 }
-                catch { /* silent fail */ }
+                catch (Exception bindError)
+                {
+                    logError(bindError);
+                    // No user-visible action needed for bind error
+                }
             }
         }
+
         protected void rptServices_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (e.CommandName == "BuyService")
             {
-                string[] details = e.CommandArgument.ToString().Split('|');
-                string url = $"Booking.aspx?title={Server.UrlEncode(details[0])}&price={details[1]}&freelancer={Server.UrlEncode(details[2])}";
-                Response.Redirect(url);
+                string[] serviceDetails = e.CommandArgument.ToString().Split('|');
+                string redirectUrl = $"Booking.aspx?title={Server.UrlEncode(serviceDetails[0])}&price={serviceDetails[1]}&freelancer={Server.UrlEncode(serviceDetails[2])}";
+                Response.Redirect(redirectUrl);
             }
         }
     }
 }
+

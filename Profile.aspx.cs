@@ -625,24 +625,10 @@ namespace Skill_Link
         // ══════════════════════════════════════════════════════════════════════
         // HAS RATED
         // ══════════════════════════════════════════════════════════════════════
-        public bool HasRated(string orderRef, string reviewerEmail)
+        // Phase 4: Use BasePage helper (inherits automatically)
+        protected bool HasRated(string orderRef, string reviewerEmail)
         {
-            if (string.IsNullOrEmpty(orderRef) || string.IsNullOrEmpty(reviewerEmail))
-                return false;
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
-                {
-                    SqlCommand cmd = new SqlCommand(
-                        "SELECT COUNT(1) FROM ServiceRatings WHERE OrderRef=@Ref AND RaterEmail=@Email",
-                        conn);
-                    cmd.Parameters.AddWithValue("@Ref", orderRef);
-                    cmd.Parameters.AddWithValue("@Email", reviewerEmail);
-                    conn.Open();
-                    return (int)cmd.ExecuteScalar() > 0;
-                }
-            }
-            catch { return false; }
+            return hasRatedOrder(orderRef, reviewerEmail);  // Enforces post-Completed check via DB
         }
         public bool HasRatedClient(string orderRef, string reviewerEmail)
         {

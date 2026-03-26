@@ -1,0 +1,25 @@
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.swp
+
+# Bin/Obj
+bin/
+obj/
+
+# Packages (restore via NuGet)
+packages/
+*.nupkg
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# PWA experiment (removed)
+pwa-version/
+

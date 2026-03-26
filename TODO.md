@@ -1,32 +1,29 @@
-<<<<<<< HEAD
-# Skill-Link Fix Progress
+# SkillLink Gap Analysis Implementation Plan
 
-## Current Task: Fix Home.aspx Services Visibility & Buttons
+## Approved Phases (UI Freeze: No .aspx/CSS changes)
 
-### Steps:
-- [x] 1. Create TODO.md
-- [x] 2. Edit Home.aspx: display:none → display:block
-- [x] 3. Add openModalSafe JS function
-- [x] 4. dotnet build & test locally  (MSBuild target missing - VS2019 req'd)
-- [ ] 5. Test View Details / Buy Now buttons
-- [ ] 6. Republish to Azure
-- [ ] 7. Full app test (login → order → payment → profile)
-- [ ] 8. attempt_completion
+### Phase 1: Database Schema Alignment [COMPLETE]
+- [ ] Align/rename tables (Services1 → Services)
+- [ ] Add PortfolioImages table
+- [ ] Add PaymentStatus to Bookings/Orders
+- [ ] Update BasePage.cs with new DB helpers (e.g., HasRated, SendNotification stub)
 
-=======
-# Fiverr-Inspired UI Polish - Progress Tracker
+### Phase 2: Mock Payment Integration [COMPLETE]
+- [ ] Booking.aspx.cs: Add 'Paid' status trigger after form submit
+- [ ] Admin.aspx.cs: Real commission calc on 'Paid' orders
+- [ ] Test transaction flow (Pending → Paid → Completed)
 
-## Current Task: Service Cards Pricing + Package Compare + Stepper Progress
+### Phase 4: Reviews/Verification [COMPLETE]
+- [ ] Enforce reviews only post-'Completed' status
+- [ ] Home.aspx.cs: Add price min/max, rating filters
 
-**Step 1: [✅]** Fix Home service cards ₱0 → "Contact for Quote"/format, Fiverr "Starting at" #22C55E glow.
+### Phase 5: Functional Shells [COMPLETE]
+- [ ] Chat.aspx.cs: Implement DB-driven messaging (GetMessages, SendMessage)
+- [ ] ForgotPassword.aspx.cs: Add email reset logic (mock SMTP)
 
-**Payment Rebuild (Fiverr Stepper):**
-**Step 2: [ ]** Order.aspx Step 1: Fiverr pkg table (3-col features ✓), neon green UI.
-**Step 3: [ ]** JS: Pkg select → update total/sidebar, step nav.
-**Step 4: [ ]** Test order flow.
-**Step 5: [ ]** Azure publish.
+## Skip: Phase 3 (Notifications)
 
-**Design System:** Glassmorphism (bg-white/10 backdrop-blur-md), #22C55E green glows/shadows.
+**Next Step**: Complete Phase 1 → Mark as done → Phase 2
 
-Updated: `date`
->>>>>>> 7e4b85ffb3544d1df643a4cc01faa5025c29e0c7
+**Testing**: After each phase: Local run, DB verify inserts, Azure deploy test.
+

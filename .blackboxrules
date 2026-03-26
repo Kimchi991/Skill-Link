@@ -1,0 +1,28 @@
+Rules:
+1,The "Literal Naming" Rule
+Function Names: Use the direct action as the name. If the function fetches users, name it getUsers. If it deletes a record, name it deleteRecord.
+
+No Prefixes/Suffixes: Avoid "Handler," "Controller," "Helper," or "Manager" unless the function cannot be described without them.
+
+Booleans: Use "is," "has," or "can" prefixes for clarity (e.g., isLoggedIn, hasPermission).
+
+Variables: Use the noun form of what the data represents (e.g., userList instead of userDataArray).
+
+2.The "Teacher Mode" Rule
+This stops the AI from just dropping a wall of code. It forces it to explain its "why" before showing the "how."
+
+The Rule: "Before providing any code, explain the logic in two simple sentences. Use comments on every third line of code to explain what is happening in plain English."
+
+Why it helps: You’ll start recognizing patterns in the logic rather than just seeing a blur of syntax.
+
+3..The "Don't Repeat Yourself" (DRY) Rule
+Beginners often write long, messy code. This rule forces the AI to keep things tidy.
+
+The Rule: "If a piece of logic is used more than once, refactor it into a separate, small function. Keep every function under 10 lines of code if possible."
+
+Why it helps: It teaches you how to break big problems into small, manageable "building blocks."
+
+4.The Rule: "If my request involves more than one file or a complex feature, break your response into 'Phase 1,' 'Phase 2,' etc. Stop after Phase 1 and wait for me to say 'continue' so I can test each part."
+
+Why it helps: It prevents you from getting lost in a massive codebase and makes debugging much easier if something breaks.
+

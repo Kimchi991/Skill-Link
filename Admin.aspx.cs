@@ -70,8 +70,9 @@ namespace Skill_Link
             litTotalOrders.Text = GetScalar("SELECT COUNT(*) FROM Orders");
 
             // Platform earnings: 5% commission on all completed orders
+            // Phase 2: Commission only on 'Paid' orders
             string earnings = GetScalar(
-                "SELECT ISNULL(SUM(TotalAmount * 0.05), 0) FROM Orders WHERE Status='Completed'");
+                "SELECT ISNULL(SUM(TotalAmount * 0.05), 0) FROM Orders WHERE Status='Paid'");
             litTotalEarnings.Text = "₱" + string.Format("{0:N2}",
                 decimal.TryParse(earnings, out decimal earn) ? earn : 0);
 

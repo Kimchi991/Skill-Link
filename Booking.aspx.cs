@@ -105,6 +105,9 @@ namespace Skill_Link
                     cmd.ExecuteNonQuery();
                 }
 
+                // Phase 2: Mock payment - auto-set to 'Paid' for demo
+                updateBookingStatus(bookingRef, "Paid");  // Uses BasePage helper
+
                 litBookingRef.Text = bookingRef;
                 ShowStep(5);
             }

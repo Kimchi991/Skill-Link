@@ -28,15 +28,17 @@ namespace Skill_Link
                 return;
             }
 
-            // Always show success — never reveal whether the email exists
-            // (prevents account enumeration attacks)
-            //
-            // TODO when real email sending is ready:
-            //   1. Look up Account WHERE Email = @email
-            //   2. Generate token: Guid.NewGuid().ToString("N")
-            //   3. Save to PasswordResetTokens (Token, Email, Expiry = DateTime.Now.AddHours(1))
-            //   4. Send email via SMTP/SendGrid with link:
-            //      ResetPassword.aspx?token={token}
+            // Phase 5: Mock reset logic (no real SMTP needed)
+            string token = Guid.NewGuid().ToString("N")[..12];  // Short token
+
+            // Simulate save to DB (real app: INSERT PasswordResetTokens)
+            executeNonQuery(
+                @"INSERT INTO PasswordResetTokens (Email, Token, Expiry) 
+                  VALUES (@p0, @p1, DATEADD(HOUR, 1, GETDATE()))", 
+                email, token);
+
+            // Mock success message with token (real: email link)
+            litResetInfo.Text = $"Reset token: <strong>{token}</strong><br/>Valid 1 hour. Use on ResetPassword.aspx";
 
             pnlForm.Visible = false;
             pnlSuccess.Visible = true;
